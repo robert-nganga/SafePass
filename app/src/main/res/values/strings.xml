@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Password Manager</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="extended_fab_label">Save Details</string>
+    <string name="page_title">Add password details</string>
+    <string name="search_title">Search</string>
+    <string-array name="categories">
+        <item>Cloud</item>
+        <item>Application</item>
+        <item>Website</item>
+        <item>Payment</item>
+    </string-array>
+</resources>
