@@ -12,4 +12,5 @@
     <color name="black_700">#020617</color>
     <color name="black_300">#061A29</color>
     <color name="black_400">#0D1120</color>
+    <color name="transparent">#00000000</color>
 </resources>

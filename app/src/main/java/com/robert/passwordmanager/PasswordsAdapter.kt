@@ -1,10 +1,22 @@
 package com.robert.passwordmanager
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
+import android.content.Context.CLIPBOARD_SERVICE
+import android.os.Build
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.models.PasswordDetails
 
@@ -20,6 +32,7 @@ class PasswordsAdapter(val context: Context): RecyclerView.Adapter<PasswordsAdap
     override fun onBindViewHolder(recentsViewHolder: RecentsViewHolder, position: Int) {
         val password = passwordList[position]
         recentsViewHolder.setData(password, position)
+        recentsViewHolder.setListeners()
     }
 
     override fun getItemCount(): Int = passwordList.size
@@ -30,12 +43,18 @@ class PasswordsAdapter(val context: Context): RecyclerView.Adapter<PasswordsAdap
         notifyDataSetChanged()
     }
 
-    inner class RecentsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    inner class RecentsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView),
+        View.OnClickListener, PopupMenu.OnMenuItemClickListener {
         private var currentPosition: Int = -1
         private var currentPassword: PasswordDetails? = null
         private val txtName = itemView.findViewById<TextView>(R.id.nameTv)
         private val txtEmail = itemView.findViewById<TextView>(R.id.emailTv)
         private val txtPassword = itemView.findViewById<TextView>(R.id.passwordTv)
+        private val btnPassword = itemView.findViewById<ImageButton>(R.id.passwordVisibility)
+        private val btnMoreOptions = itemView.findViewById<ImageButton>(R.id.moreOptions)
+        private val icVisibilityOff = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_baseline_visibility_off_24, null)
+        private val icVisibilityOn = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_baseline_visibility_24, null)
+        private var isPasswordVisible = false
 
         fun setData(passwordDetails: PasswordDetails, position: Int){
             txtName.text = passwordDetails.websiteName
@@ -43,6 +62,50 @@ class PasswordsAdapter(val context: Context): RecyclerView.Adapter<PasswordsAdap
             txtPassword.text = passwordDetails.password
             this.currentPosition = position
             this.currentPassword = passwordDetails
+            btnPassword.setImageDrawable(icVisibilityOff)
+        }
+
+        fun setListeners() {
+            btnPassword.setOnClickListener(this)
+            btnMoreOptions.setOnClickListener(this)
+        }
+
+        override fun onClick(view: View?) {
+            when(view!!.id){
+                R.id.passwordVisibility -> handlePasswordVisibility()
+                R.id.moreOptions -> displayMenuOptions(view)
+            }
+        }
+
+        private fun handlePasswordVisibility() {
+            if (isPasswordVisible){
+                txtPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                btnPassword.setImageDrawable(icVisibilityOn)
+                isPasswordVisible = !isPasswordVisible
+
+            }else{
+                txtPassword.transformationMethod = PasswordTransformationMethod.getInstance()
+                btnPassword.setImageDrawable(icVisibilityOff)
+                isPasswordVisible = !isPasswordVisible
+            }
+        }
+
+
+        private fun displayMenuOptions(view: View) {
+            val popUpMenu = PopupMenu(view.context, view)
+            popUpMenu.inflate(R.menu.pop_up_menu)
+            popUpMenu.setOnMenuItemClickListener(this)
+            popUpMenu.show()
+        }
+
+        override fun onMenuItemClick(item: MenuItem?): Boolean {
+            when(item!!.itemId){
+                R.id.action_copy -> copyPasswordToClipboard()
+            }
+            return false
+        }
+
+        private fun copyPasswordToClipboard() {
         }
     }
 }
