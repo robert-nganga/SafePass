@@ -1,10 +1,9 @@
 package com.robert.passwordmanager
 
+
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.Context.CLIPBOARD_SERVICE
-import android.os.Build
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
@@ -15,7 +14,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.models.PasswordDetails
@@ -106,6 +104,10 @@ class PasswordsAdapter(val context: Context): RecyclerView.Adapter<PasswordsAdap
         }
 
         private fun copyPasswordToClipboard() {
+            val clipboard = itemView.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clip: ClipData = ClipData.newPlainText("simple text", txtPassword.text.toString())
+            clipboard.setPrimaryClip(clip)
+            Toast.makeText(itemView.context, "Copied Password", Toast.LENGTH_SHORT).show()
         }
     }
 }

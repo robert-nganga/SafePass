@@ -20,7 +20,7 @@
         android:title="List" />
 
     <item
-        android:id="@+id/settingsFragment"
-        android:icon="@drawable/ic_baseline_settings_30"
+        android:id="@+id/toolsFragment"
+        android:icon="@drawable/ic_baseline_tune_30"
         android:title="Settings" />
 </menu>
