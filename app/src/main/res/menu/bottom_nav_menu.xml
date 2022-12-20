@@ -22,5 +22,5 @@
     <item
         android:id="@+id/toolsFragment"
         android:icon="@drawable/ic_baseline_tune_30"
-        android:title="Settings" />
+        android:title="Tools" />
 </menu>
