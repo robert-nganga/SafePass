@@ -17,6 +17,20 @@ class PasswordViewModel(private val repository: PasswordRepository): ViewModel()
 
     fun searchPasswords(name: String): Flow<List<PasswordDetails>> = repository.searchPasswords(name)
 
+    private val _generatedPassword = MutableLiveData<String>()
+    val  generatedPassword: LiveData<String>
+        get() = _generatedPassword
+
+
+    fun generatePassword(isWithLetters: Boolean,
+                         isWithNumbers: Boolean,
+                         isWithSpecial: Boolean,
+                         length: Int){
+        val passwordManager = PasswordManager()
+        _generatedPassword.value = passwordManager.generatePassword(isWithLetters,
+             true, isWithNumbers, isWithSpecial, length)
+    }
+
 
     fun insert(passwordDetails: PasswordDetails) = viewModelScope.launch{
         repository.insert(passwordDetails)
