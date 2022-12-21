@@ -63,7 +63,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                 <ImageButton
-                    android:id="@+id/imgCopyPassword"
+                    android:id="@+id/btnCopyPassword"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_weight="1"

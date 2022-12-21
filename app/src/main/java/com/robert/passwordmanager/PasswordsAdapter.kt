@@ -4,6 +4,7 @@ package com.robert.passwordmanager
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.os.Build
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
@@ -107,7 +108,9 @@ class PasswordsAdapter(val context: Context): RecyclerView.Adapter<PasswordsAdap
             val clipboard = itemView.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             val clip: ClipData = ClipData.newPlainText("simple text", txtPassword.text.toString())
             clipboard.setPrimaryClip(clip)
-            Toast.makeText(itemView.context, "Copied Password", Toast.LENGTH_SHORT).show()
+            // Only show a toast for Android 12 and lower.
+            if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2)
+                Toast.makeText(itemView.context, "Copied Password", Toast.LENGTH_SHORT).show()
         }
     }
 }
