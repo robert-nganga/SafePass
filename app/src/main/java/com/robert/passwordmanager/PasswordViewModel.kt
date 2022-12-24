@@ -38,6 +38,20 @@ class PasswordViewModel(private val repository: PasswordRepository): ViewModel()
         repository.insert(passwordDetails)
     }
 
+    fun getSizeOfEachCategory(categories: Array<String>, items: List<PasswordDetails> ): Map<String, Int>{
+        val sizeMap = mutableMapOf<String, Int>()
+        categories.forEach { category ->
+            var size = 0
+            items.forEach { item ->
+                if(category == item.category){
+                    size++
+                }
+            }
+            sizeMap.put(category, size)
+        }
+        return sizeMap
+    }
+
     fun getPasswordsByCategory(categories: Array<String>, items: List<PasswordDetails> ): ArrayList<Section> {
         val sections = ArrayList<Section>()
         categories.forEach { category->

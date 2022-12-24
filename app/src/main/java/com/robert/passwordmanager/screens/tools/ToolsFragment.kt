@@ -1,4 +1,4 @@
-package com.robert.passwordmanager.screens
+package com.robert.passwordmanager.screens.tools
 
 import android.content.ClipData
 import android.content.ClipboardManager

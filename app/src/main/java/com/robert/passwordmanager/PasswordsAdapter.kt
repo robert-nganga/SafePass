@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.models.PasswordDetails
 
@@ -100,8 +101,13 @@ class PasswordsAdapter(val context: Context): RecyclerView.Adapter<PasswordsAdap
         override fun onMenuItemClick(item: MenuItem?): Boolean {
             when(item!!.itemId){
                 R.id.action_copy -> copyPasswordToClipboard()
+                R.id.action_delete -> deletePassword()
             }
             return false
+        }
+
+        private fun deletePassword() {
+
         }
 
         private fun copyPasswordToClipboard() {
