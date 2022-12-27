@@ -28,7 +28,7 @@ class PasswordRepository(private val passwordDao: PasswordDao){
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun delete(passwordDetails: PasswordDetails) {
-        passwordDao.insert(passwordDetails)
+        passwordDao.delete(passwordDetails)
     }
 
 }

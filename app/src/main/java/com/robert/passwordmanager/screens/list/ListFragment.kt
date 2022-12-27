@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.PasswordViewModel
 import com.robert.passwordmanager.R
+import com.robert.passwordmanager.models.PasswordDetails
 
 
 class ListFragment : Fragment() {
@@ -25,7 +27,7 @@ class ListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_list, container, false)
         categories = resources.getStringArray(R.array.categories)
 
-        val allPasswordsAdapter = AllPasswordsAdapter(requireContext())
+        val allPasswordsAdapter = AllPasswordsAdapter(requireContext()){deletePassword(it)}
         val mainRecyclerView = view?.findViewById<RecyclerView>(R.id.mainRecyclerView)
         mainRecyclerView?.adapter = allPasswordsAdapter
 
@@ -39,6 +41,10 @@ class ListFragment : Fragment() {
 
         }
         return view
+    }
+
+    private fun deletePassword(passwordDetails: PasswordDetails) {
+        passwordViewModel.delete(passwordDetails)
     }
 
 }

@@ -8,9 +8,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.PasswordsAdapter
 import com.robert.passwordmanager.R
+import com.robert.passwordmanager.models.PasswordDetails
 import com.robert.passwordmanager.models.Section
 
-class AllPasswordsAdapter(val context: Context): RecyclerView.Adapter<AllPasswordsAdapter.AllPasswordsViewHolder>() {
+class AllPasswordsAdapter(val context: Context,
+                          private val deletePassword: (PasswordDetails) -> Unit): RecyclerView.Adapter<AllPasswordsAdapter.AllPasswordsViewHolder>() {
     private val sections = ArrayList<Section>()
 
     fun addSections(newList: ArrayList<Section>) {
@@ -39,7 +41,7 @@ class AllPasswordsAdapter(val context: Context): RecyclerView.Adapter<AllPasswor
 
         fun setData(section: Section) {
             sectionTitle.text = section.sectionTitle
-            val childRecyclerAdapter = PasswordsAdapter(context)
+            val childRecyclerAdapter = PasswordsAdapter(context, deletePassword)
             childRecyclerAdapter.updateList(section.itemList)
             childRecyclerView.adapter = childRecyclerAdapter
         }

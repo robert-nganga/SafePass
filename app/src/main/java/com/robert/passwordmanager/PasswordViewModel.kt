@@ -38,6 +38,10 @@ class PasswordViewModel(private val repository: PasswordRepository): ViewModel()
         repository.insert(passwordDetails)
     }
 
+    fun delete(passwordDetails: PasswordDetails) = viewModelScope.launch{
+        repository.delete(passwordDetails)
+    }
+
     fun getSizeOfEachCategory(categories: Array<String>, items: List<PasswordDetails> ): Map<String, Int>{
         val sizeMap = mutableMapOf<String, Int>()
         categories.forEach { category ->

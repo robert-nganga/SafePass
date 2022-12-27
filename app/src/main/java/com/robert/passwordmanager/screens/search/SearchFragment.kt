@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.PasswordViewModel
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.PasswordsAdapter
+import com.robert.passwordmanager.models.PasswordDetails
 import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
@@ -28,7 +29,7 @@ class SearchFragment : Fragment() {
         txtSearch = view.findViewById(R.id.searchView)
         txtSearch.clearFocus()
 
-        val recentsAdapter = PasswordsAdapter(requireContext())
+        val recentsAdapter = PasswordsAdapter(requireContext()){deletePassword(it)}
         val recyclerView = view?.findViewById<RecyclerView>(R.id.searchRecyclerView)
         recyclerView?.adapter = recentsAdapter
 
@@ -48,6 +49,10 @@ class SearchFragment : Fragment() {
         })
 
         return view
+    }
+
+    private fun deletePassword(passwordDetails: PasswordDetails) {
+        passwordViewModel.delete(passwordDetails)
     }
 
     private fun searchPasswords(newText: String?, passwordsAdapter: PasswordsAdapter) {

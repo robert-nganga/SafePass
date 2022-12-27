@@ -4,15 +4,18 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.PasswordViewModel
 import com.robert.passwordmanager.PasswordsAdapter
 import com.robert.passwordmanager.R
+import com.robert.passwordmanager.models.PasswordDetails
 
 
 class HomeFragment : Fragment() {
@@ -36,7 +39,7 @@ class HomeFragment : Fragment() {
         txtCloud = view.findViewById(R.id.txtCloud)
         txtPayment = view.findViewById(R.id.txtPayment)
 
-        val passwordsAdapter = PasswordsAdapter(requireContext())
+        val passwordsAdapter = PasswordsAdapter(requireContext()) { deletePassword(it) }
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recentRv)
         recyclerView?.adapter = passwordsAdapter
 
@@ -54,12 +57,20 @@ class HomeFragment : Fragment() {
         return view
     }
 
+    private fun deletePassword(passwordDetails: PasswordDetails) {
+        passwordViewModel.delete(passwordDetails)
+    }
+
+
     @SuppressLint("SetTextI18n")
     private fun updateTextViews(sizeMap: Map<String, Int>) {
         txtWebsites.text = sizeMap["Website"].toString() + " websites"
-        txtApps.text = sizeMap["Application"].toString() + " applications"
-        txtPayment.text = sizeMap["Payment"].toString() + " passwords"
+        txtApps.text = sizeMap["Application"].toString() + " apps"
+        txtPayment.text = sizeMap["Payment"].toString() + " wallets"
         txtCloud.text = sizeMap["Cloud"].toString() + " passwords"
     }
+
+
+
 
 }

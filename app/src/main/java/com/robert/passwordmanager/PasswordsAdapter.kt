@@ -20,9 +20,11 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.models.PasswordDetails
 
-class PasswordsAdapter(val context: Context): RecyclerView.Adapter<PasswordsAdapter.RecentsViewHolder>() {
+class PasswordsAdapter(val context: Context,
+                       private val deletePassword: (PasswordDetails) -> Unit): RecyclerView.Adapter<PasswordsAdapter.RecentsViewHolder>() {
 
     private val passwordList = ArrayList<PasswordDetails>()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentsViewHolder {
         val itemView = LayoutInflater.from(context).inflate(R.layout.recent_rv_item, parent, false)
@@ -101,14 +103,11 @@ class PasswordsAdapter(val context: Context): RecyclerView.Adapter<PasswordsAdap
         override fun onMenuItemClick(item: MenuItem?): Boolean {
             when(item!!.itemId){
                 R.id.action_copy -> copyPasswordToClipboard()
-                R.id.action_delete -> deletePassword()
+                R.id.action_delete -> deletePassword(currentPassword!!)
             }
             return false
         }
 
-        private fun deletePassword() {
-
-        }
 
         private fun copyPasswordToClipboard() {
             val clipboard = itemView.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
