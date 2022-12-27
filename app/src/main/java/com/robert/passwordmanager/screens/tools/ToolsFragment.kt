@@ -72,7 +72,11 @@ class ToolsFragment : Fragment() {
 
         btnGenerate = view.findViewById(R.id.generatePassword)
         btnGenerate.setOnClickListener {
-            passwordViewModel.generatePassword(isLetters, isNumbers , isSymbols, length)
+            if(!isNumbers && !isLetters && !isSymbols){
+                Toast.makeText(view.context, "Check at least one item", Toast.LENGTH_SHORT).show()
+            }else{
+                passwordViewModel.generatePassword(isLetters, isNumbers , isSymbols, length)
+            }
         }
 
         passwordViewModel.generatedPassword.observe(viewLifecycleOwner){ password->
