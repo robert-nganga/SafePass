@@ -12,13 +12,6 @@ class PasswordRepository(private val passwordDao: PasswordDao){
     fun searchPasswords(name: String): Flow<List<PasswordDetails>> = passwordDao.searchPasswordByName(name)
 
 
-//    @Suppress("RedundantSuspendModifier")
-//    @WorkerThread
-//    suspend fun getCategoryPasswords(name: String): List<PasswordDetails>{
-//        return passwordDao.searchPasswordByName(n)
-//    }
-
-
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insert(passwordDetails: PasswordDetails) {

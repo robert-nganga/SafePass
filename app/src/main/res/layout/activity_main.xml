@@ -20,7 +20,6 @@
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
-        style="@style/Widget.MaterialComponents.BottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -32,7 +31,6 @@
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
-            style="@style/Widget.MaterialComponents.BottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="15dp"

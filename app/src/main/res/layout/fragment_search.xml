@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@drawable/search_view_bg"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:iconifiedByDefault="false"
             app:queryHint="Search" />
 
