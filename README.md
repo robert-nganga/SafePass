@@ -31,3 +31,6 @@ The ViewModel layer is responsible for managing the data presented to the user a
     
   - [**Android Navigation Component**](https://developer.android.com/guide/navigation)
     The Android Navigation Component is a framework that helps developers manage the navigation of their app. It provides a way to define the different screens in the app and the actions that can be taken to move between them, as well as handling the back stack and saving the state of the app.
+
+## Contributions
+We welcome contributions to this project. If you have any suggestions or want to report a bug, please open an issue or submit a pull request
