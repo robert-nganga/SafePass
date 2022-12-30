@@ -8,6 +8,8 @@ import android.text.TextUtils
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.robert.passwordmanager.R
@@ -17,14 +19,21 @@ class AddPasswordActivity : AppCompatActivity() {
     private lateinit var txtName: TextInputEditText
     private lateinit var txtEmail: TextInputEditText
     private lateinit var txtPassword: TextInputEditText
+    private lateinit var toolBar: MaterialToolbar
     private var category: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_password)
         setSupportActionBar(findViewById(R.id.topAppBar))
         actionBar?.setDisplayHomeAsUpEnabled(true)
+
+        toolBar = findViewById(R.id.topAppBar)
+        toolBar.setNavigationOnClickListener {
+            finish()
+        }
 
         autoCompleteTextView = findViewById(R.id.autoCompleteTextViews)
         val categories = resources.getStringArray(R.array.categories)

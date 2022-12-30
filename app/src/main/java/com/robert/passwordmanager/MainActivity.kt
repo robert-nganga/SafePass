@@ -1,5 +1,6 @@
 package com.robert.passwordmanager
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -38,6 +40,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -58,16 +61,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun getPasswordDetails(result: ActivityResult?): PasswordDetails {
         val sdf = SimpleDateFormat("dd MMM, yyy - HH:mm")
         val currentDate: String = sdf.format(Date())
-        val password = PasswordDetails(
+        return PasswordDetails(
             websiteName = result?.data?.getStringExtra("name")!!,
             userName = result.data?.getStringExtra("email")!!,
             category = result.data?.getStringExtra("category")!!,
             password = result.data?.getStringExtra("password")!!,
             date = currentDate
         )
-        return password
     }
 }

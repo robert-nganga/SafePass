@@ -29,7 +29,6 @@ class PasswordViewModel(private val repository: PasswordRepository): ViewModel()
                          length: Int){
         val passwordManager = PasswordManager()
         val isUpperCase = isWithLetters
-
         _generatedPassword.value = passwordManager.generatePassword(isWithLetters,
              isUpperCase, isWithNumbers, isWithSpecial, length)
     }
