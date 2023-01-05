@@ -1,4 +1,4 @@
-package com.robert.passwordmanager
+package com.robert.passwordmanager.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +12,7 @@ import androidx.biometric.BiometricManager.Authenticators.*
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.robert.passwordmanager.R
 import java.util.concurrent.Executor
 
 class AuthenticateActivity : AppCompatActivity() {

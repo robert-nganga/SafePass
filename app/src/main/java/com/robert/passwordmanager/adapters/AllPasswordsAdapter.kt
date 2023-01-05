@@ -1,4 +1,4 @@
-package com.robert.passwordmanager.screens.list
+package com.robert.passwordmanager.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.robert.passwordmanager.PasswordsAdapter
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.models.PasswordDetails
 import com.robert.passwordmanager.models.Section

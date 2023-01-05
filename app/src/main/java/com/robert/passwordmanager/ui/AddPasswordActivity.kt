@@ -1,4 +1,4 @@
-package com.robert.passwordmanager.screens
+package com.robert.passwordmanager.ui
 
 import android.app.Activity
 import android.content.Intent

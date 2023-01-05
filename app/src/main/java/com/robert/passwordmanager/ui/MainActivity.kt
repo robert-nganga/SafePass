@@ -1,4 +1,4 @@
-package com.robert.passwordmanager
+package com.robert.passwordmanager.ui
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -16,8 +16,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.robert.passwordmanager.R
 import com.robert.passwordmanager.models.PasswordDetails
-import com.robert.passwordmanager.screens.AddPasswordActivity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val passwordViewModel: PasswordViewModel by viewModels { PasswordViewModel.Factory}
+    val passwordViewModel: PasswordViewModel by viewModels { PasswordViewModel.Factory }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

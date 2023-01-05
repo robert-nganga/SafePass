@@ -1,4 +1,4 @@
-package com.robert.passwordmanager.screens.search
+package com.robert.passwordmanager.ui.fragments.search
 
 import android.os.Bundle
 import android.view.*
@@ -8,16 +8,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.robert.passwordmanager.PasswordViewModel
+import com.robert.passwordmanager.ui.PasswordViewModel
 import com.robert.passwordmanager.R
-import com.robert.passwordmanager.PasswordsAdapter
+import com.robert.passwordmanager.adapters.PasswordsAdapter
 import com.robert.passwordmanager.models.PasswordDetails
+import com.robert.passwordmanager.ui.MainActivity
 import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
 
     private lateinit var txtSearch: SearchView
-    private val passwordViewModel: PasswordViewModel by viewModels { PasswordViewModel.Factory}
+    private lateinit var passwordViewModel: PasswordViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,6 +26,7 @@ class SearchFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_search, container, false)
+        passwordViewModel = (activity as MainActivity).passwordViewModel
 
         txtSearch = view.findViewById(R.id.searchView)
         txtSearch.clearFocus()

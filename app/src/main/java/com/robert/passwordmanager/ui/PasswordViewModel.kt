@@ -1,18 +1,20 @@
-package com.robert.passwordmanager
+package com.robert.passwordmanager.ui
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.*
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
+import com.robert.passwordmanager.PasswordManager
+import com.robert.passwordmanager.repositories.PasswordRepository
+import com.robert.passwordmanager.PasswordsApplication
 import com.robert.passwordmanager.models.PasswordDetails
 import com.robert.passwordmanager.models.Section
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class PasswordViewModel(private val repository: PasswordRepository): ViewModel() {
+class PasswordViewModel(
+                    private val passwordManager: PasswordManager,
+                    private val repository: PasswordRepository): ViewModel() {
 
     val allPasswords: LiveData<List<PasswordDetails>> = repository.allPasswords.asLiveData()
 
@@ -27,7 +29,6 @@ class PasswordViewModel(private val repository: PasswordRepository): ViewModel()
                          isWithNumbers: Boolean,
                          isWithSpecial: Boolean,
                          length: Int){
-        val passwordManager = PasswordManager()
         val isUpperCase = isWithLetters
         _generatedPassword.value = passwordManager.generatePassword(isWithLetters,
              isUpperCase, isWithNumbers, isWithSpecial, length)
@@ -92,6 +93,7 @@ class PasswordViewModel(private val repository: PasswordRepository): ViewModel()
                 val savedStateHandle = extras.createSavedStateHandle()
 
                 return PasswordViewModel(
+                    PasswordManager(),
                     (application as PasswordsApplication).repository,
                 ) as T
             }

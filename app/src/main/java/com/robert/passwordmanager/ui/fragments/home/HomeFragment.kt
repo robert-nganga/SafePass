@@ -1,26 +1,25 @@
-package com.robert.passwordmanager.screens.home
+package com.robert.passwordmanager.ui.fragments.home
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.robert.passwordmanager.PasswordViewModel
-import com.robert.passwordmanager.PasswordsAdapter
+import com.robert.passwordmanager.ui.PasswordViewModel
+import com.robert.passwordmanager.adapters.PasswordsAdapter
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.models.PasswordDetails
+import com.robert.passwordmanager.ui.MainActivity
 
 
 class HomeFragment : Fragment() {
 
-    private val passwordViewModel: PasswordViewModel by viewModels {PasswordViewModel.Factory}
+    private lateinit var passwordViewModel: PasswordViewModel
     private lateinit var txtWebsites: TextView
     private lateinit var txtApps: TextView
     private lateinit var txtCloud: TextView
@@ -32,6 +31,7 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+        passwordViewModel = (activity as MainActivity).passwordViewModel
 
         val categories = resources.getStringArray(R.array.categories)
         txtWebsites = view.findViewById(R.id.txtWebsite)

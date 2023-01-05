@@ -7,22 +7,22 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.robert.passwordmanager.screens.home.HomeFragment"
+        android:name="com.robert.passwordmanager.ui.fragments.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.robert.passwordmanager.screens.search.SearchFragment"
+        android:name="com.robert.passwordmanager.ui.fragments.search.SearchFragment"
         android:label="Search"
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/listFragment"
-        android:name="com.robert.passwordmanager.screens.list.ListFragment"
+        android:name="com.robert.passwordmanager.ui.fragments.list.ListFragment"
         android:label="List"
         tools:layout="@layout/fragment_list" />
     <fragment
         android:id="@+id/toolsFragment"
-        android:name="com.robert.passwordmanager.screens.tools.ToolsFragment"
+        android:name="com.robert.passwordmanager.ui.fragments.tools.ToolsFragment"
         android:label="Settings"
         tools:layout="@layout/fragment_tools" />
 </navigation>

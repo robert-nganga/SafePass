@@ -1,4 +1,4 @@
-package com.robert.passwordmanager
+package com.robert.passwordmanager.repositories
 
 import androidx.annotation.WorkerThread
 import com.robert.passwordmanager.models.PasswordDetails

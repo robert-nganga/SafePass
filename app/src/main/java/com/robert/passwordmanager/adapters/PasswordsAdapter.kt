@@ -1,4 +1,4 @@
-package com.robert.passwordmanager
+package com.robert.passwordmanager.adapters
 
 
 import android.content.ClipData
@@ -16,8 +16,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.robert.passwordmanager.R
 import com.robert.passwordmanager.models.PasswordDetails
 
 class PasswordsAdapter(val context: Context,
@@ -54,8 +54,10 @@ class PasswordsAdapter(val context: Context,
         private val txtPassword = itemView.findViewById<TextView>(R.id.passwordTv)
         private val btnPassword = itemView.findViewById<ImageButton>(R.id.passwordVisibility)
         private val btnMoreOptions = itemView.findViewById<ImageButton>(R.id.moreOptions)
-        private val icVisibilityOff = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_baseline_visibility_off_24, null)
-        private val icVisibilityOn = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_baseline_visibility_24, null)
+        private val icVisibilityOff = ResourcesCompat.getDrawable(context.resources,
+            R.drawable.ic_baseline_visibility_off_24, null)
+        private val icVisibilityOn = ResourcesCompat.getDrawable(context.resources,
+            R.drawable.ic_baseline_visibility_24, null)
         private var isPasswordVisible = false
 
         fun setData(passwordDetails: PasswordDetails, position: Int){
