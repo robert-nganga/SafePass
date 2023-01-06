@@ -43,6 +43,10 @@ class PasswordViewModel(
         repository.delete(passwordDetails)
     }
 
+    fun evaluatePassword(password: String): Float {
+        return passwordManager.evaluatePassword(password)
+    }
+
     fun getSizeOfEachCategory(categories: Array<String>, items: List<PasswordDetails> ): Map<String, Int>{
         val sizeMap = mutableMapOf<String, Int>()
         categories.forEach { category ->

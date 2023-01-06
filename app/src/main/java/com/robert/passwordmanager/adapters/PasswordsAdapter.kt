@@ -84,12 +84,12 @@ class PasswordsAdapter(val context: Context,
         private fun handlePasswordVisibility() {
             if (isPasswordVisible){
                 txtPassword.transformationMethod = HideReturnsTransformationMethod.getInstance()
-                btnPassword.setImageDrawable(icVisibilityOn)
+                btnPassword.setImageDrawable(icVisibilityOff)
                 isPasswordVisible = !isPasswordVisible
 
             }else{
                 txtPassword.transformationMethod = PasswordTransformationMethod.getInstance()
-                btnPassword.setImageDrawable(icVisibilityOff)
+                btnPassword.setImageDrawable(icVisibilityOn)
                 isPasswordVisible = !isPasswordVisible
             }
         }
