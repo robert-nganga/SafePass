@@ -66,7 +66,7 @@ class PasswordsAdapter(val context: Context,
             txtPassword.text = passwordDetails.password
             this.currentPosition = position
             this.currentPassword = passwordDetails
-            btnPassword.setImageDrawable(icVisibilityOff)
+            btnPassword.setImageDrawable(icVisibilityOn)
         }
 
         fun setListeners() {

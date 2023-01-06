@@ -14,9 +14,16 @@ class PasswordManagerTest{
     }
 
     @Test
-    fun generatesCharacterOfSpecifiedLength_returnsTrue() {
+    fun generatesStringOfLengthTen_returnsTrue() {
         val length = 10
         val result = passwordManager.generatePassword(true, true, true, true, length)
         assert(result.length == length)
+    }
+
+    @Test
+    fun generatesAnEmptyString_returnsTrue() {
+        val length = 0
+        val result = passwordManager.generatePassword(true, true, true, true, length)
+        assert(result.isEmpty())
     }
 }
