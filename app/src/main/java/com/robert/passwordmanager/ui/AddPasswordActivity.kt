@@ -101,7 +101,6 @@ class AddPasswordActivity : AppCompatActivity() {
             }
             hasNoSelection -> {
                 autoCompleteTextView.error = "Select"
-
             }
             TextUtils.isEmpty(txtPassword.text) -> {
                 txtPassword.error = "Must not be empty"
