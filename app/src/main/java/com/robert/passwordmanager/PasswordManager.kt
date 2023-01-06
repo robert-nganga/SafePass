@@ -40,16 +40,19 @@ class PasswordManager {
         if(isWithNumbers){ result += this.numbers }
         if(isWithSpecial){ result += this.special }
 
-        val rnd = SecureRandom.getInstance("SHA1PRNG")
-        val sb = StringBuilder(length)
+        return if (result.isEmpty()){
+            ""
+        }else {
+            val rnd = SecureRandom.getInstance("SHA1PRNG")
+            val sb = StringBuilder(length)
 
-        while (i < length) {
-            val randomInt : Int = rnd.nextInt(result.length)
-            sb.append(result[randomInt])
-            i++
+            while (i < length) {
+                val randomInt : Int = rnd.nextInt(result.length)
+                sb.append(result[randomInt])
+                i++
+            }
+            sb.toString()
         }
-
-        return sb.toString()
     }
 
     /**

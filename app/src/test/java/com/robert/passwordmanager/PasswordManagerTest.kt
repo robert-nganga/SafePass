@@ -14,16 +14,29 @@ class PasswordManagerTest{
     }
 
     @Test
-    fun generatesStringOfLengthTen_returnsTrue() {
+    fun allCharacterTypesSelected_returnsStringOfLengthTen() {
         val length = 10
         val result = passwordManager.generatePassword(true, true, true, true, length)
         assert(result.length == length)
     }
 
     @Test
-    fun generatesAnEmptyString_returnsTrue() {
-        val length = 0
-        val result = passwordManager.generatePassword(true, true, true, true, length)
+    fun noCharacterTypeSelected_returnsEmptyString() {
+        val length = 10
+        val result = passwordManager.generatePassword(false, false, false, false, length)
         assert(result.isEmpty())
+    }
+
+    @Test
+    fun onlyOneCharacterTypeSelected_returnsStringOfLengthTen() {
+        val length = 10
+        val result = passwordManager.generatePassword(false, false, false, true, length)
+        assert(result.length == length)
+    }
+
+    @Test
+    fun onlyNumbersSelected_returnsOnlyNumbers() {
+        val result = passwordManager.generatePassword(false, false, true, false, 10)
+        assert(result.matches(Regex("[0-9]+")))
     }
 }

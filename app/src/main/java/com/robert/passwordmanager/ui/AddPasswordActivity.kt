@@ -83,7 +83,7 @@ class AddPasswordActivity : AppCompatActivity() {
 
     private fun validatePassword(editable: Editable) {
         val result = passwordViewModel.evaluatePassword(editable.toString())
-        if(result<0.6){
+        if(result<0.5){
             txtPassword.error = "Weak password"
         }else{
             txtPassword.error = null
