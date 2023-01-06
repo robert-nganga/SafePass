@@ -31,7 +31,6 @@ The ViewModel layer is responsible for managing the data presented to the user a
 ![](screenshots/Screenshot2.jpg)
 ![](screenshots/Screenshot3.jpg)
 ![](screenshots/Screenshot4.jpg)
-![](screenshots/Screenshot5.jpg)
 
 
 ## Contributions
