@@ -41,4 +41,4 @@ The ViewModel layer is responsible for managing the data presented to the user a
 
 
 ## Contributions
-We welcome contributions to this project. If you have any suggestions or want to report a bug, please open an issue or submit a pull request
+We welcome contributions to this project. If you have any suggestions or want to report a bug, please open an issue or submit a pull request.
