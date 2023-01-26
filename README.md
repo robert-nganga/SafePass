@@ -17,7 +17,7 @@ The model layer is responsible for handling the data and business logic of the a
 The view layer is responsible for displaying the data to the user and handling user input. In this app, the view layer consists of the app's Activity and Fragment classes, which define the layout and user interface elements.
 
 ### ViewModel
-The ViewModel layer is responsible for managing the data presented to the user and handling the communication between the Model and View layers. It retrieves data from the Repository and prepares it for display in the View, and it also handles user input and updates the Model as necessary.
+The ViewModel layer is responsible for managing the data presented to the user and handling the communication between the Model and View layers. It retrieves data from the Repository and prepares it for display in the View, and it also handles user input and updates the Model as necessary
 
 ## TechStacks
   - [**Kotlin Flows and Coroutines**](https://kotlinlang.org/docs/reference/coroutines-overview.html)
