@@ -7,18 +7,6 @@ This is a password manager app developed in Kotlin for Android using the MVVM ar
   - Secure password generation
   - Biometrics Login
 
-## MVVM Architecture
-The Model-View-ViewModel (MVVM) architecture is a design pattern that separates the business logic of an application from its user interface. It consists of three layers:
-
-### Model
-The model layer is responsible for handling the data and business logic of the app. In this app, the model layer consists of the Room database, which is used to store and retrieve the passwords. The database is managed by a Repository class, which acts as an intermediary between the ViewModel and the database.
-
-### View
-The view layer is responsible for displaying the data to the user and handling user input. In this app, the view layer consists of the app's Activity and Fragment classes, which define the layout and user interface elements.
-
-### ViewModel
-The ViewModel layer is responsible for managing the data presented to the user and handling the communication between the Model and View layers. It retrieves data from the Repository and prepares it for display in the View, and it also handles user input and updates the Model as necessary
-
 ## TechStacks
   - [**Kotlin Flows and Coroutines**](https://kotlinlang.org/docs/reference/coroutines-overview.html)
     Kotlin Flows and Coroutines are used to perform asynchronous tasks in the app, such as querying the database or encrypting and decrypting data. Kotlin Flows are a new addition to the Kotlin language that allow developers to build reactive streams of data, while Coroutines are a lightweight way to perform asynchronous tasks.
@@ -34,10 +22,7 @@ The ViewModel layer is responsible for managing the data presented to the user a
   The Truth library is a set of Java and Android libraries for asserting the truth of expressions, and providing failure messages that are easy to understand and debug. It provides a concise and expressive syntax for creating and combining matchers, which can be used to match the properties of an object. In this way, Truth can be used to write expressive and robust tests for an Android app, making it easier to verify that the app is functioning as expected.
     
 ## Demo    
-![](screenshots/Screenshot1.png)
-![](screenshots/Screenshot2.png)
-![](screenshots/Screenshot3.png)
-![](screenshots/Screenshot4.png)
+
 
 
 ## Contributions
