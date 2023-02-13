@@ -22,9 +22,9 @@ This is a password manager app developed in Kotlin for Android using the MVVM ar
   The Truth library is a set of Java and Android libraries for asserting the truth of expressions, and providing failure messages that are easy to understand and debug. It provides a concise and expressive syntax for creating and combining matchers, which can be used to match the properties of an object. In this way, Truth can be used to write expressive and robust tests for an Android app, making it easier to verify that the app is functioning as expected.
     
 ## Screenshots
-![](screenshots/capture.PNG)
-![](screenshots/capture1.PNG)
-![](screenshots/capture2.PNG)
+![](screenshots/Capture.PNG)
+![](screenshots/Capture1.PNG)
+![](screenshots/Capture3.PNG)
 
 
 
