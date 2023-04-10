@@ -19,7 +19,7 @@ This is a password manager app developed in Kotlin for Android using the MVVM ar
   - [**ViewModels**](https://developer.android.com/topic/libraries/architecture/viewmodel)
   The app uses ViewModels to manage UI-related data and handle logic that is specific to the UI. ViewModels are designed to survive configuration changes (such as screen rotations) and to be shared between multiple fragments or activities. In this app, the ViewModels are implemented using the Android ViewModel class, which is part of the Android Architecture Components.
   - [**Truth Library**](https://github.com/google/truth)
-  The Truth library is a set of Java and Android libraries for asserting the truth of expressions, and providing failure messages that are easy to understand and debug. It provides a concise and expressive syntax for creating and combining matchers, which can be used to match the properties of an object. In this way, Truth can be used to write expressive and robust tests for an Android app, making it easier to verify that the app is functioning as expected.
+  The Truth library is a set of Java and Android libraries for asserting the truth of expressions, and providing failure messages that are easy to understand and debug. It provides a concise and expressive syntax for creating and combining matchers, which can be used to match the properties of an object. In this way, Truth can be used to write expressive and robust tests for an Android app, making it easier to verify that the app is functioning as expected
     
 ## Screenshots
 ![](screenshots/Capture.PNG)
