@@ -5,7 +5,7 @@ import androidx.lifecycle.*
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.robert.passwordmanager.PasswordManager
-import com.robert.passwordmanager.repositories.PasswordRepository
+import com.robert.passwordmanager.repositories.PasswordRepositoryImpl
 import com.robert.passwordmanager.PasswordsApplication
 import com.robert.passwordmanager.models.PasswordDetails
 import com.robert.passwordmanager.models.Section
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class PasswordViewModel(
                     private val passwordManager: PasswordManager,
-                    private val repository: PasswordRepository): ViewModel() {
+                    private val repository: PasswordRepositoryImpl): ViewModel() {
 
     val allPasswords: LiveData<List<PasswordDetails>> = repository.allPasswords.asLiveData()
 
