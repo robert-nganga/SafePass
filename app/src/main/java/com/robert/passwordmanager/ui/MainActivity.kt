@@ -18,9 +18,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.models.PasswordDetails
+import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
@@ -36,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    val passwordViewModel: PasswordViewModel by viewModels { PasswordViewModel.Factory }
+    val passwordViewModel: PasswordViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -2,6 +2,7 @@ package com.robert.passwordmanager.di
 
 import android.content.Context
 import androidx.room.Room
+import com.robert.passwordmanager.PasswordManager
 import com.robert.passwordmanager.data.PasswordRoomDatabase
 import com.robert.passwordmanager.utils.Contants.PASSWORD_DATABASE
 import dagger.Module
@@ -23,4 +24,8 @@ object PasswordModule {
         PasswordRoomDatabase::class.java,
         PASSWORD_DATABASE
     ).build()
+
+    @Provides
+    @Singleton
+    fun providePasswordManager() = PasswordManager()
 }

@@ -9,10 +9,13 @@ import com.robert.passwordmanager.repositories.PasswordRepositoryImpl
 import com.robert.passwordmanager.PasswordsApplication
 import com.robert.passwordmanager.models.PasswordDetails
 import com.robert.passwordmanager.models.Section
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PasswordViewModel(
+@HiltViewModel
+class PasswordViewModel @Inject constructor(
                     private val passwordManager: PasswordManager,
                     private val repository: PasswordRepositoryImpl): ViewModel() {
 
@@ -81,26 +84,4 @@ class PasswordViewModel(
     }
 
 
-
-
-    companion object {
-
-        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-                extras: CreationExtras
-            ): T {
-                // Get the Application object from extras
-                val application = checkNotNull(extras[APPLICATION_KEY])
-                // Create a SavedStateHandle for this ViewModel from extras
-                val savedStateHandle = extras.createSavedStateHandle()
-
-                return PasswordViewModel(
-                    PasswordManager(),
-                    (application as PasswordsApplication).repository,
-                ) as T
-            }
-        }
-    }
 }
