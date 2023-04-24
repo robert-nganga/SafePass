@@ -3,9 +3,7 @@ package com.robert.passwordmanager
 import android.app.Application
 import com.robert.passwordmanager.repositories.PasswordRepository
 import com.robert.passwordmanager.room.PasswordRoomDatabase
+import dagger.hilt.android.HiltAndroidApp
 
-class PasswordsApplication: Application() {
-
-    val database by lazy { PasswordRoomDatabase.getDatabase(this) }
-    val repository by lazy { PasswordRepository(database.passwordDao()) }
-}
+@HiltAndroidApp
+class PasswordsApplication: Application()
