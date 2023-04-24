@@ -5,12 +5,12 @@ import java.util.logging.Logger
 
 class PasswordManager {
 
-    val letters : String = "abcdefghijklmnopqrstuvwxyz"
-    val uppercaseLetters : String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    val numbers : String = "0123456789"
-    val special : String = "@#=+!£$%&?-"
-    val maxPasswordLength : Float = 20F //Max password lenght that my app creates
-    val maxPasswordFactor : Float = 10F //Max password factor based on chars inside password
+    private val letters : String = "abcdefghijklmnopqrstuvwxyz"
+    private val uppercaseLetters : String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    private val numbers : String = "0123456789"
+    private val special : String = "@#=+!£$%&?-"
+    private val maxPasswordLength : Float = 20F //Max password lenght that my app creates
+    private val maxPasswordFactor : Float = 10F //Max password factor based on chars inside password
     //  see evaluatePassword function below
 
     companion object {
@@ -26,34 +26,33 @@ class PasswordManager {
      * @param length Int value with the length of the password
      * @return the new password.
      */
-    fun generatePassword(isWithLetters: Boolean,
-                         isWithUppercase: Boolean,
-                         isWithNumbers: Boolean,
-                         isWithSpecial: Boolean,
-                         length: Int) : String {
+    fun generatePassword(
+        isWithLetters: Boolean,
+        isWithUppercase: Boolean,
+        isWithNumbers: Boolean,
+        isWithSpecial: Boolean,
+        length: Int
+    ): String {
+        val charSets = mutableListOf<String>()
 
-        var result = ""
-        var i = 0
+        if (isWithLetters) { charSets.add(this.letters) }
+        if (isWithUppercase) { charSets.add(this.uppercaseLetters) }
+        if (isWithNumbers) { charSets.add(this.numbers) }
+        if (isWithSpecial) { charSets.add(this.special) }
 
-        if(isWithLetters){ result += this.letters }
-        if(isWithUppercase){ result += this.uppercaseLetters }
-        if(isWithNumbers){ result += this.numbers }
-        if(isWithSpecial){ result += this.special }
+        if (charSets.size < 1) { return "" }
 
-        return if (result.isEmpty()){
-            ""
-        }else {
-            val rnd = SecureRandom.getInstance("SHA1PRNG")
-            val sb = StringBuilder(length)
-
-            while (i < length) {
-                val randomInt : Int = rnd.nextInt(result.length)
-                sb.append(result[randomInt])
-                i++
-            }
-            sb.toString()
+        var result = charSets.joinToString("")
+        if (isWithLetters && isWithUppercase && isWithNumbers && isWithSpecial) {
+            // If all character sets are included, ensure at least one character from each set is included
+            result += "${this.letters.random()}${this.uppercaseLetters.random()}${this.numbers.random()}${this.special.random()}"
         }
+
+        result = result.toList().shuffled().joinToString("")
+
+        return result.substring(0, length.coerceAtMost(result.length))
     }
+
 
     /**
      * Evaluate a random password
