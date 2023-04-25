@@ -28,7 +28,7 @@ class VaultFragment : Fragment() {
         categories = resources.getStringArray(R.array.categories)
         passwordViewModel = (activity as MainActivity).passwordViewModel
 
-        val allPasswordsAdapter = AllPasswordsAdapter(requireContext()){deletePassword(it)}
+        val allPasswordsAdapter = AllPasswordsAdapter()
         val mainRecyclerView = view?.findViewById<RecyclerView>(R.id.mainRecyclerView)
         mainRecyclerView?.adapter = allPasswordsAdapter
 
@@ -37,8 +37,7 @@ class VaultFragment : Fragment() {
         mainRecyclerView?.layoutManager = layoutManager
 
         passwordViewModel.allPasswords.observe(viewLifecycleOwner){
-            val passwordList = passwordViewModel.getPasswordsByCategory(categories, it)
-            allPasswordsAdapter.addSections(passwordList)
+            allPasswordsAdapter.addSections(it as ArrayList<PasswordDetails>)
 
         }
         return view

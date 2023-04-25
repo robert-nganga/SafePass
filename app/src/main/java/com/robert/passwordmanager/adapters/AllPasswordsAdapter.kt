@@ -1,6 +1,5 @@
 package com.robert.passwordmanager.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,41 +7,37 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.models.PasswordDetails
-import com.robert.passwordmanager.models.Section
 
-class AllPasswordsAdapter(val context: Context,
-                          private val deletePassword: (PasswordDetails) -> Unit): RecyclerView.Adapter<AllPasswordsAdapter.AllPasswordsViewHolder>() {
-    private val sections = ArrayList<Section>()
+class AllPasswordsAdapter(): RecyclerView.Adapter<AllPasswordsAdapter.AllPasswordsViewHolder>() {
+    private val passwords = ArrayList<PasswordDetails>()
 
-    fun addSections(newList: ArrayList<Section>) {
-        sections.clear()
-        sections.addAll(newList)
+    fun addSections(newList: ArrayList<PasswordDetails>) {
+        passwords.clear()
+        passwords.addAll(newList)
         notifyDataSetChanged()
     }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllPasswordsViewHolder {
-        val itemView = LayoutInflater.from(context).inflate(R.layout.rv_section, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.vault_item, parent, false)
         return AllPasswordsViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: AllPasswordsViewHolder, position: Int) {
-        val section = sections[position]
-        holder.setData(section)
+        val password = passwords[position]
+        holder.setData(password)
 
     }
 
-    override fun getItemCount(): Int = sections.size
+    override fun getItemCount(): Int = passwords.size
 
     inner class AllPasswordsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-        private val sectionTitle = itemView.findViewById<TextView>(R.id.sectionTitle)
-        private val childRecyclerView = itemView.findViewById<RecyclerView>(R.id.childRecyclerview)
+        private val title = itemView.findViewById<TextView>(R.id.tvListTitle)
+        private val username = itemView.findViewById<TextView>(R.id.tvListUsername)
 
-        fun setData(section: Section) {
-            sectionTitle.text = section.sectionTitle
-            val childRecyclerAdapter = PasswordsAdapter(context, deletePassword)
-            childRecyclerAdapter.updateList(section.itemList)
-            childRecyclerView.adapter = childRecyclerAdapter
+        fun setData(password: PasswordDetails) {
+            title.text = password.websiteName
+            username.text = password.userName
         }
     }
 
