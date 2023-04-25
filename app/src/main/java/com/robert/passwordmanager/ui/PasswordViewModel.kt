@@ -2,11 +2,8 @@ package com.robert.passwordmanager.ui
 
 import android.util.Log
 import androidx.lifecycle.*
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.viewmodel.CreationExtras
-import com.robert.passwordmanager.PasswordManager
+import com.robert.passwordmanager.utils.PasswordManager
 import com.robert.passwordmanager.repositories.PasswordRepositoryImpl
-import com.robert.passwordmanager.PasswordsApplication
 import com.robert.passwordmanager.models.PasswordDetails
 import com.robert.passwordmanager.models.Section
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,8 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PasswordViewModel @Inject constructor(
-                    private val passwordManager: PasswordManager,
-                    private val repository: PasswordRepositoryImpl): ViewModel() {
+    private val passwordManager: PasswordManager,
+    private val repository: PasswordRepositoryImpl): ViewModel() {
 
     val allPasswords: LiveData<List<PasswordDetails>> = repository.allPasswords.asLiveData()
 

@@ -1,6 +1,5 @@
-package com.robert.passwordmanager
+package com.robert.passwordmanager.utils
 
-import java.security.SecureRandom
 import java.util.logging.Logger
 
 class PasswordManager {

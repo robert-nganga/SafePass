@@ -17,7 +17,9 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.robert.passwordmanager.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddPasswordActivity : AppCompatActivity() {
     private lateinit var autoCompleteTextView: AutoCompleteTextView
     private lateinit var txtName: TextInputEditText
@@ -31,7 +33,7 @@ class AddPasswordActivity : AppCompatActivity() {
     private var category: String? = null
     private var hasNoSelection = true
 
-    val passwordViewModel: PasswordViewModel by viewModels { PasswordViewModel.Factory }
+    private val passwordViewModel: PasswordViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

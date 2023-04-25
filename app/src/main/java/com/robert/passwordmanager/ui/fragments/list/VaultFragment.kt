@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.ui.PasswordViewModel
@@ -15,7 +14,7 @@ import com.robert.passwordmanager.models.PasswordDetails
 import com.robert.passwordmanager.ui.MainActivity
 
 
-class ListFragment : Fragment() {
+class VaultFragment : Fragment() {
 
     private lateinit var categories: Array<String>
     private lateinit var passwordViewModel: PasswordViewModel
@@ -25,7 +24,7 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_vault, container, false)
         categories = resources.getStringArray(R.array.categories)
         passwordViewModel = (activity as MainActivity).passwordViewModel
 

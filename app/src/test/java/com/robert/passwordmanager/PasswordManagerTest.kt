@@ -1,6 +1,6 @@
 package com.robert.passwordmanager
 
-import org.junit.Assert.*
+import com.robert.passwordmanager.utils.PasswordManager
 import org.junit.Before
 import org.junit.Test
 
