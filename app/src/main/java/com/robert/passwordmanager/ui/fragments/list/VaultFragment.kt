@@ -37,7 +37,7 @@ class VaultFragment : Fragment() {
         mainRecyclerView?.layoutManager = layoutManager
 
         passwordViewModel.allPasswords.observe(viewLifecycleOwner){
-            allPasswordsAdapter.addSections(it as ArrayList<PasswordDetails>)
+            allPasswordsAdapter.submitList(it)
 
         }
         return view
