@@ -1,12 +1,10 @@
 package com.robert.passwordmanager.ui
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.robert.passwordmanager.utils.PasswordManager
-import com.robert.passwordmanager.repositories.PasswordRepositoryImpl
 import com.robert.passwordmanager.models.PasswordDetails
 import com.robert.passwordmanager.models.PasswordItem
-import com.robert.passwordmanager.models.Section
+import com.robert.passwordmanager.repositories.PasswordRepositoryImpl
+import com.robert.passwordmanager.utils.PasswordManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -70,15 +68,14 @@ class PasswordViewModel @Inject constructor(
         if (items.isEmpty()) return emptyList()
 
         val passwordTitles = items
-            .groupBy { it.category }
+            .groupBy { it.date }
             .map { (category, passwords) ->
                 val passwordSum = passwords.sumOf { it.id }
                 PasswordItem.PasswordTitle(category, passwordSum)
             }
-
         val passwordDetails = items.map { PasswordItem.Password(it) }
 
-        return passwordTitles.flatMap { listOf(it) + passwordDetails.filter { p -> p.pass.category == it.title } }
+        return passwordTitles.flatMap { listOf(it) + passwordDetails.filter { p -> p.pass.date == it.title } }
     }
 
 

@@ -3,6 +3,7 @@ package com.robert.passwordmanager.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -16,9 +17,15 @@ import java.lang.ClassCastException
 
 class AllPasswordsAdapter(): ListAdapter<PasswordItem, RecyclerView.ViewHolder>(diffUtil) {
 
+    private var btnCopyClickListener: ((String)->Unit)? = null
+
+    fun setCopyClickListener(listener: (String)-> Unit){
+        btnCopyClickListener = listener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val passwordItem = LayoutInflater.from(parent.context).inflate(R.layout.vault_item, parent, false)
-        val headerItem = LayoutInflater.from(parent.context).inflate(R.layout.password_title, parent, false)
+        val headerItem = LayoutInflater.from(parent.context).inflate(R.layout.password_header, parent, false)
         return when (viewType){
             ITEM_VIEW_TYPE_HEADER -> PasswordHeaderViewHolder(headerItem)
             ITEM_VIEW_TYPE_ITEM -> AllPasswordsViewHolder(passwordItem)
@@ -38,7 +45,7 @@ class AllPasswordsAdapter(): ListAdapter<PasswordItem, RecyclerView.ViewHolder>(
         when (holder){
             is AllPasswordsViewHolder -> {
                 val password = getItem(position) as PasswordItem.Password
-                holder.setData(password.pass)
+                holder.setData(password.pass, btnCopyClickListener)
             }
             is PasswordHeaderViewHolder -> {
                 val header = getItem(position) as PasswordItem.PasswordTitle
@@ -53,10 +60,12 @@ class AllPasswordsAdapter(): ListAdapter<PasswordItem, RecyclerView.ViewHolder>(
     inner class AllPasswordsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         private val title = itemView.findViewById<TextView>(R.id.tvListTitle)
         private val username = itemView.findViewById<TextView>(R.id.tvListUsername)
+        private val imgCopy = itemView.findViewById<ImageView>(R.id.imgCopy)
 
-        fun setData(password: PasswordDetails) {
+        fun setData(password: PasswordDetails, btnCopyClickListener: ((String) -> Unit)?) {
             title.text = password.websiteName
             username.text = password.userName
+            imgCopy.setOnClickListener {btnCopyClickListener?.let { it(password.password) }}
         }
     }
 
@@ -79,6 +88,8 @@ class AllPasswordsAdapter(): ListAdapter<PasswordItem, RecyclerView.ViewHolder>(
     }
 
 }
+
+
 
 
 

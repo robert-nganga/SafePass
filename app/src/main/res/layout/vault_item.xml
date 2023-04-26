@@ -22,7 +22,7 @@
         android:layout_marginEnd="10dp"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imgCopy"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Chrome" />
@@ -37,13 +37,13 @@
         android:layout_marginBottom="2dp"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/imgCopy"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/tvListTitle"
         tools:text="didar@gmail.com" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imgCopy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

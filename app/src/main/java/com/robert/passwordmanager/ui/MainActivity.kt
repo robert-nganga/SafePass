@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SimpleDateFormat")
     private fun getPasswordDetails(result: ActivityResult?): PasswordDetails {
-        val sdf = SimpleDateFormat("dd MMM, yyy - HH:mm")
+        val sdf = SimpleDateFormat("dd MMM, yyy")
         val currentDate: String = sdf.format(Date())
         return PasswordDetails(
             websiteName = result?.data?.getStringExtra("name")!!,
