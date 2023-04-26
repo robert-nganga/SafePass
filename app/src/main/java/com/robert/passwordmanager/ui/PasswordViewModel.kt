@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.robert.passwordmanager.utils.PasswordManager
 import com.robert.passwordmanager.repositories.PasswordRepositoryImpl
 import com.robert.passwordmanager.models.PasswordDetails
+import com.robert.passwordmanager.models.PasswordItem
 import com.robert.passwordmanager.models.Section
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -17,6 +18,10 @@ class PasswordViewModel @Inject constructor(
     private val repository: PasswordRepositoryImpl): ViewModel() {
 
     val allPasswords: LiveData<List<PasswordDetails>> = repository.allPasswords.asLiveData()
+
+    val passwordItems = allPasswords.map { passwords->
+        getPasswordItems(passwords)
+    }
 
     fun searchPasswords(name: String): Flow<List<PasswordDetails>> = repository.searchPasswords(name)
 
@@ -61,24 +66,21 @@ class PasswordViewModel @Inject constructor(
         return sizeMap
     }
 
-    fun getPasswordsByCategory(categories: Array<String>, items: List<PasswordDetails> ): ArrayList<Section> {
-        val sections = ArrayList<Section>()
-        categories.forEach { category->
-            val passwordList = ArrayList<PasswordDetails>()
-            items.forEach { item->
-                if(item.category == category){
-                    passwordList.add(item)
-                }
-            }
-            if (passwordList.isNotEmpty()){
-                sections.add(Section(category, passwordList))
-                val size = passwordList.size
-                Log.i("PasswordViewModel", "Section added with title $category and size $size")
-            }
-        }
+    private fun getPasswordItems(items: List<PasswordDetails>): List<PasswordItem> {
+        if (items.isEmpty()) return emptyList()
 
-        return sections
+        val passwordTitles = items
+            .groupBy { it.category }
+            .map { (category, passwords) ->
+                val passwordSum = passwords.sumOf { it.id }
+                PasswordItem.PasswordTitle(category, passwordSum)
+            }
+
+        val passwordDetails = items.map { PasswordItem.Password(it) }
+
+        return passwordTitles.flatMap { listOf(it) + passwordDetails.filter { p -> p.pass.category == it.title } }
     }
+
 
 
 }

@@ -38,7 +38,6 @@ class VaultFragment : Fragment() {
 
         passwordViewModel.allPasswords.observe(viewLifecycleOwner){
             allPasswordsAdapter.submitList(it)
-
         }
         return view
     }
