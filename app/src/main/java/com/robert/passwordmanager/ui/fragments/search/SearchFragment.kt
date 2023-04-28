@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.ui.PasswordViewModel
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.adapters.PasswordsAdapter
-import com.robert.passwordmanager.models.PasswordDetails
+import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.ui.MainActivity
 import kotlinx.coroutines.launch
 
@@ -53,7 +52,7 @@ class SearchFragment : Fragment() {
         return view
     }
 
-    private fun deletePassword(passwordDetails: PasswordDetails) {
+    private fun deletePassword(passwordDetails: Account) {
         passwordViewModel.delete(passwordDetails)
     }
 

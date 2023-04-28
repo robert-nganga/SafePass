@@ -1,7 +1,7 @@
 package com.robert.passwordmanager.ui
 
 import androidx.lifecycle.*
-import com.robert.passwordmanager.models.PasswordDetails
+import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.models.PasswordItem
 import com.robert.passwordmanager.repositories.PasswordRepositoryImpl
 import com.robert.passwordmanager.utils.PasswordManager
@@ -15,13 +15,15 @@ class PasswordViewModel @Inject constructor(
     private val passwordManager: PasswordManager,
     private val repository: PasswordRepositoryImpl): ViewModel() {
 
-    val allPasswords: LiveData<List<PasswordDetails>> = repository.allPasswords.asLiveData()
+    val allPasswords: LiveData<List<Account>> = repository.allPasswords.asLiveData()
+
+    private var _orderBy = MutableLiveData<String>()
 
     val passwordItems = allPasswords.map { passwords->
         getPasswordItems(passwords)
     }
 
-    fun searchPasswords(name: String): Flow<List<PasswordDetails>> = repository.searchPasswords(name)
+    fun searchPasswords(name: String): Flow<List<Account>> = repository.searchPasswords(name)
 
     private val _generatedPassword = MutableLiveData<String>()
     val  generatedPassword: LiveData<String>
@@ -32,17 +34,19 @@ class PasswordViewModel @Inject constructor(
                          isWithNumbers: Boolean,
                          isWithSpecial: Boolean,
                          length: Int){
-        val isUpperCase = isWithLetters
         _generatedPassword.value = passwordManager.generatePassword(isWithLetters,
-             isUpperCase, isWithNumbers, isWithSpecial, length)
+             isWithLetters, isWithNumbers, isWithSpecial, length)
     }
 
+    fun setOrderBY(new: String){
+        _orderBy.value = new
+    }
 
-    fun insert(passwordDetails: PasswordDetails) = viewModelScope.launch{
+    fun insert(passwordDetails: Account) = viewModelScope.launch{
         repository.insert(passwordDetails)
     }
 
-    fun delete(passwordDetails: PasswordDetails) = viewModelScope.launch{
+    fun delete(passwordDetails: Account) = viewModelScope.launch{
         repository.delete(passwordDetails)
     }
 
@@ -50,7 +54,7 @@ class PasswordViewModel @Inject constructor(
         return passwordManager.evaluatePassword(password)
     }
 
-    fun getSizeOfEachCategory(categories: Array<String>, items: List<PasswordDetails> ): Map<String, Int>{
+    fun getSizeOfEachCategory(categories: Array<String>, items: List<Account> ): Map<String, Int>{
         val sizeMap = mutableMapOf<String, Int>()
         categories.forEach { category ->
             var size = 0
@@ -64,7 +68,7 @@ class PasswordViewModel @Inject constructor(
         return sizeMap
     }
 
-    private fun getPasswordItems(items: List<PasswordDetails>): List<PasswordItem> {
+    private fun getPasswordItems(items: List<Account>): List<PasswordItem> {
         if (items.isEmpty()) return emptyList()
 
         val passwordTitles = items
@@ -75,7 +79,7 @@ class PasswordViewModel @Inject constructor(
             }
         val passwordDetails = items.map { PasswordItem.Password(it) }
 
-        return passwordTitles.flatMap { listOf(it) + passwordDetails.filter { p -> p.pass.date == it.title } }
+        return passwordTitles.flatMap { listOf(it) + passwordDetails.filter { p -> p.account.date == it.title } }
     }
 
 

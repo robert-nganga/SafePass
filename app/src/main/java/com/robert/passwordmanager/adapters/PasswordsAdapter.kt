@@ -18,12 +18,12 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.R
-import com.robert.passwordmanager.models.PasswordDetails
+import com.robert.passwordmanager.models.Account
 
 class PasswordsAdapter(val context: Context,
-                       private val deletePassword: (PasswordDetails) -> Unit): RecyclerView.Adapter<PasswordsAdapter.RecentsViewHolder>() {
+                       private val deletePassword: (Account) -> Unit): RecyclerView.Adapter<PasswordsAdapter.RecentsViewHolder>() {
 
-    private val passwordList = ArrayList<PasswordDetails>()
+    private val passwordList = ArrayList<Account>()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentsViewHolder {
@@ -39,7 +39,7 @@ class PasswordsAdapter(val context: Context,
 
     override fun getItemCount(): Int = passwordList.size
 
-    fun updateList(newList: List<PasswordDetails>){
+    fun updateList(newList: List<Account>){
         passwordList.clear()
         passwordList.addAll(newList)
         notifyDataSetChanged()
@@ -48,7 +48,7 @@ class PasswordsAdapter(val context: Context,
     inner class RecentsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView),
         View.OnClickListener, PopupMenu.OnMenuItemClickListener {
         private var currentPosition: Int = -1
-        private var currentPassword: PasswordDetails? = null
+        private var currentPassword: Account? = null
         private val txtName = itemView.findViewById<TextView>(R.id.nameTv)
         private val txtEmail = itemView.findViewById<TextView>(R.id.emailTv)
         private val txtPassword = itemView.findViewById<TextView>(R.id.passwordTv)
@@ -60,7 +60,7 @@ class PasswordsAdapter(val context: Context,
             R.drawable.ic_baseline_visibility_24, null)
         private var isPasswordVisible = false
 
-        fun setData(passwordDetails: PasswordDetails, position: Int){
+        fun setData(passwordDetails: Account, position: Int){
             txtName.text = passwordDetails.websiteName
             txtEmail.text = passwordDetails.userName
             txtPassword.text = passwordDetails.password

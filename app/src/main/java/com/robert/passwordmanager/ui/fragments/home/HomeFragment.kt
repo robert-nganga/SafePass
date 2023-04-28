@@ -7,13 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.ui.PasswordViewModel
 import com.robert.passwordmanager.adapters.PasswordsAdapter
 import com.robert.passwordmanager.R
-import com.robert.passwordmanager.models.PasswordDetails
+import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.ui.MainActivity
 
 
@@ -57,7 +56,7 @@ class HomeFragment : Fragment() {
         return view
     }
 
-    private fun deletePassword(passwordDetails: PasswordDetails) {
+    private fun deletePassword(passwordDetails: Account) {
         passwordViewModel.delete(passwordDetails)
     }
 

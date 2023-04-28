@@ -8,7 +8,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
 import com.robert.passwordmanager.getOrAwaitValue
-import com.robert.passwordmanager.models.PasswordDetails
+import com.robert.passwordmanager.models.Account
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -26,7 +26,7 @@ class PasswordDaoTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var passwordRoomDatabase: PasswordRoomDatabase
-    private lateinit var passwordDetails: PasswordDetails
+    private lateinit var passwordDetails: Account
     private lateinit var passwordDao: PasswordDao
 
     @Before
@@ -38,7 +38,7 @@ class PasswordDaoTest {
 
         passwordDao = passwordRoomDatabase.passwordDao()
 
-        passwordDetails = PasswordDetails("password", "website",
+        passwordDetails = Account("password", "website",
             "01 020, 2022 04:45", "job@gmail.com", "Google")
     }
 

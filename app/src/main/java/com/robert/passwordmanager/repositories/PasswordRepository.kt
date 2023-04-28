@@ -1,13 +1,13 @@
 package com.robert.passwordmanager.repositories
 
-import com.robert.passwordmanager.models.PasswordDetails
+import com.robert.passwordmanager.models.Account
 import kotlinx.coroutines.flow.Flow
 
 interface PasswordRepository {
 
-    fun searchPasswords(query: String): Flow<List<PasswordDetails>>
+    fun searchPasswords(query: String): Flow<List<Account>>
 
-    suspend fun insert(passwordDetails: PasswordDetails)
+    suspend fun insert(passwordDetails: Account)
 
-    suspend fun delete(passwordDetails: PasswordDetails)
+    suspend fun delete(passwordDetails: Account)
 }

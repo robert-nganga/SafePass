@@ -17,7 +17,7 @@ import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.robert.passwordmanager.R
-import com.robert.passwordmanager.models.PasswordDetails
+import com.robert.passwordmanager.models.Account
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
@@ -64,10 +64,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun getPasswordDetails(result: ActivityResult?): PasswordDetails {
+    private fun getPasswordDetails(result: ActivityResult?): Account {
         val sdf = SimpleDateFormat("dd MMM, yyy")
         val currentDate: String = sdf.format(Date())
-        return PasswordDetails(
+        return Account(
             websiteName = result?.data?.getStringExtra("name")!!,
             userName = result.data?.getStringExtra("email")!!,
             category = result.data?.getStringExtra("category")!!,

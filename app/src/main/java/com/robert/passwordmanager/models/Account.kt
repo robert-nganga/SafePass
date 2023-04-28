@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "password_table")
-data class PasswordDetails(
+data class Account(
     @ColumnInfo(name ="password")val password: String,
     @ColumnInfo(name ="category")val category: String,
     @ColumnInfo(name ="date")val date: String,

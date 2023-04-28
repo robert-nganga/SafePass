@@ -2,9 +2,9 @@ package com.robert.passwordmanager.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.robert.passwordmanager.models.PasswordDetails
+import com.robert.passwordmanager.models.Account
 
-@Database(entities = [PasswordDetails::class], version = 1, exportSchema = false)
+@Database(entities = [Account::class], version = 1, exportSchema = false)
 abstract class PasswordRoomDatabase: RoomDatabase() {
 
     abstract fun passwordDao(): PasswordDao
