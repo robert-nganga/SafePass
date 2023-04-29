@@ -4,6 +4,7 @@ import androidx.lifecycle.*
 import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.models.AccountListItem
 import com.robert.passwordmanager.repositories.PasswordRepositoryImpl
+import com.robert.passwordmanager.utils.OrderBy
 import com.robert.passwordmanager.utils.PasswordManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -17,15 +18,15 @@ class PasswordViewModel @Inject constructor(
 
     val allAccounts: LiveData<List<Account>> = repository.allPasswords.asLiveData()
 
-    private var _orderBy = MutableLiveData<String>()
+    private var _orderBy = MutableLiveData<OrderBy>(OrderBy.Category)
 
     val allAccountItems = MediatorLiveData<List<AccountListItem>>().apply {
-        addSource(_orderBy){ value = allAccounts.value?.let { it1 -> getPasswordItems(it1) } }
-        addSource(allAccounts){value = getPasswordItems(it)}
-    }
-
-    val passwordItems = allAccounts.map { passwords->
-        getPasswordItems(passwords)
+        addSource(_orderBy){ order ->
+            value = allAccounts.value?.let { accounts -> getAccountListItems(accounts, order) }
+        }
+        addSource(allAccounts){ accounts ->
+            value = _orderBy.value?.let { order -> getAccountListItems(accounts, order) }
+        }
     }
 
     fun searchPasswords(name: String): Flow<List<Account>> = repository.searchPasswords(name)
@@ -43,8 +44,8 @@ class PasswordViewModel @Inject constructor(
              isWithLetters, isWithNumbers, isWithSpecial, length)
     }
 
-    fun setOrderBY(new: String){
-        _orderBy.value = new
+    fun setOrderBY(newOrder: OrderBy){
+        _orderBy.value = newOrder
     }
 
     fun insert(passwordDetails: Account) = viewModelScope.launch{
@@ -68,23 +69,31 @@ class PasswordViewModel @Inject constructor(
                     size++
                 }
             }
-            sizeMap.put(category, size)
+            sizeMap[category] = size
         }
         return sizeMap
     }
 
-    private fun getPasswordItems(items: List<Account>): List<AccountListItem> {
+    private fun getAccountListItems(items: List<Account>, orderBy: OrderBy): List<AccountListItem> {
         if (items.isEmpty()) return emptyList()
 
-        val passwordTitles = items
-            .groupBy { it.date }
-            .map { (category, passwords) ->
-                val passwordSum = passwords.sumOf { it.id }
-                AccountListItem.AccountHeaderItem(category, passwordSum)
+        val accountHeaders = items
+            .groupBy {
+                when (orderBy){
+                    is OrderBy.Category -> {it.category}
+                    is OrderBy.Date -> {it.date}
+                }
+            }.map { (category, passwords) ->
+                val headerId = passwords.first().id
+                AccountListItem.AccountHeaderItem(category, headerId)
             }
-        val passwordDetails = items.map { AccountListItem.AccountItem(it) }
+        val accountItems = items.map { AccountListItem.AccountItem(it) }
 
-        return passwordTitles.flatMap { listOf(it) + passwordDetails.filter { p -> p.account.date == it.title } }
+        return accountHeaders.flatMap { listOf(it) + accountItems.filter { item ->
+            when (orderBy){
+                is OrderBy.Date -> { item.account.date == it.title }
+                is OrderBy.Category -> { item.account.category == it.title }
+            } } }
     }
 
 

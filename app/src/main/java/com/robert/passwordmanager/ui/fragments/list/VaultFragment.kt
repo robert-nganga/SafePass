@@ -45,7 +45,7 @@ class VaultFragment : Fragment() {
             copyPasswordToClipboard(it)
         }
 
-        passwordViewModel.passwordItems.observe(viewLifecycleOwner){
+        passwordViewModel.allAccountItems.observe(viewLifecycleOwner){
             allPasswordsAdapter.submitList(it)
         }
         return view
