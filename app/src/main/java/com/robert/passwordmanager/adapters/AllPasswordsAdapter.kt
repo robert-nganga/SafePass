@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.models.Account
-import com.robert.passwordmanager.models.PasswordItem
+import com.robert.passwordmanager.models.AccountListItem
 import com.robert.passwordmanager.utils.Contants.ITEM_VIEW_TYPE_HEADER
 import com.robert.passwordmanager.utils.Contants.ITEM_VIEW_TYPE_ITEM
 import java.lang.ClassCastException
 
-class AllPasswordsAdapter(): ListAdapter<PasswordItem, RecyclerView.ViewHolder>(diffUtil) {
+class AllPasswordsAdapter(): ListAdapter<AccountListItem, RecyclerView.ViewHolder>(diffUtil) {
 
     private var btnCopyClickListener: ((String)->Unit)? = null
 
@@ -35,8 +35,8 @@ class AllPasswordsAdapter(): ListAdapter<PasswordItem, RecyclerView.ViewHolder>(
 
     override fun getItemViewType(position: Int): Int {
         return when(getItem(position)){
-            is PasswordItem.Password -> ITEM_VIEW_TYPE_ITEM
-            is PasswordItem.PasswordTitle -> ITEM_VIEW_TYPE_HEADER
+            is AccountListItem.AccountItem -> ITEM_VIEW_TYPE_ITEM
+            is AccountListItem.AccountHeaderItem -> ITEM_VIEW_TYPE_HEADER
         }
     }
 
@@ -44,11 +44,11 @@ class AllPasswordsAdapter(): ListAdapter<PasswordItem, RecyclerView.ViewHolder>(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder){
             is AllPasswordsViewHolder -> {
-                val password = getItem(position) as PasswordItem.Password
+                val password = getItem(position) as AccountListItem.AccountItem
                 holder.setData(password.account, btnCopyClickListener)
             }
             is PasswordHeaderViewHolder -> {
-                val header = getItem(position) as PasswordItem.PasswordTitle
+                val header = getItem(position) as AccountListItem.AccountHeaderItem
                 holder.setData(header.title)
             }
         }
@@ -78,11 +78,11 @@ class AllPasswordsAdapter(): ListAdapter<PasswordItem, RecyclerView.ViewHolder>(
     }
 
     companion object {
-        private val diffUtil = object : DiffUtil.ItemCallback<PasswordItem>() {
-            override fun areItemsTheSame(oldItem: PasswordItem, newItem: PasswordItem): Boolean =
+        private val diffUtil = object : DiffUtil.ItemCallback<AccountListItem>() {
+            override fun areItemsTheSame(oldItem: AccountListItem, newItem: AccountListItem): Boolean =
                 oldItem.id == newItem.id
 
-            override fun areContentsTheSame(oldItem: PasswordItem, newItem: PasswordItem): Boolean =
+            override fun areContentsTheSame(oldItem: AccountListItem, newItem: AccountListItem): Boolean =
                 oldItem == newItem
         }
     }

@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     ){
         if(it.resultCode == Activity.RESULT_OK){
             passwordViewModel.insert(getPasswordDetails(it))
-            Log.i("MainActivity", "Password added successfully")
+            Log.i("MainActivity", "AccountItem added successfully")
         }
     }
 

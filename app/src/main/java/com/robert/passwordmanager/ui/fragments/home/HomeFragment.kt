@@ -47,7 +47,7 @@ class HomeFragment : Fragment() {
         recyclerView?.layoutManager = layoutManager
 
 
-        passwordViewModel.allPasswords.observe(viewLifecycleOwner) { list ->
+        passwordViewModel.allAccounts.observe(viewLifecycleOwner) { list ->
             list.let {
                 passwordsAdapter.updateList(it)
                 updateTextViews(passwordViewModel.getSizeOfEachCategory(categories, it))

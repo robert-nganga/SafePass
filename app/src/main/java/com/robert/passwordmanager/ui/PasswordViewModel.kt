@@ -2,7 +2,7 @@ package com.robert.passwordmanager.ui
 
 import androidx.lifecycle.*
 import com.robert.passwordmanager.models.Account
-import com.robert.passwordmanager.models.PasswordItem
+import com.robert.passwordmanager.models.AccountListItem
 import com.robert.passwordmanager.repositories.PasswordRepositoryImpl
 import com.robert.passwordmanager.utils.PasswordManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,11 +15,16 @@ class PasswordViewModel @Inject constructor(
     private val passwordManager: PasswordManager,
     private val repository: PasswordRepositoryImpl): ViewModel() {
 
-    val allPasswords: LiveData<List<Account>> = repository.allPasswords.asLiveData()
+    val allAccounts: LiveData<List<Account>> = repository.allPasswords.asLiveData()
 
     private var _orderBy = MutableLiveData<String>()
 
-    val passwordItems = allPasswords.map { passwords->
+    val allAccountItems = MediatorLiveData<List<AccountListItem>>().apply {
+        addSource(_orderBy){ value = allAccounts.value?.let { it1 -> getPasswordItems(it1) } }
+        addSource(allAccounts){value = getPasswordItems(it)}
+    }
+
+    val passwordItems = allAccounts.map { passwords->
         getPasswordItems(passwords)
     }
 
@@ -68,16 +73,16 @@ class PasswordViewModel @Inject constructor(
         return sizeMap
     }
 
-    private fun getPasswordItems(items: List<Account>): List<PasswordItem> {
+    private fun getPasswordItems(items: List<Account>): List<AccountListItem> {
         if (items.isEmpty()) return emptyList()
 
         val passwordTitles = items
             .groupBy { it.date }
             .map { (category, passwords) ->
                 val passwordSum = passwords.sumOf { it.id }
-                PasswordItem.PasswordTitle(category, passwordSum)
+                AccountListItem.AccountHeaderItem(category, passwordSum)
             }
-        val passwordDetails = items.map { PasswordItem.Password(it) }
+        val passwordDetails = items.map { AccountListItem.AccountItem(it) }
 
         return passwordTitles.flatMap { listOf(it) + passwordDetails.filter { p -> p.account.date == it.title } }
     }

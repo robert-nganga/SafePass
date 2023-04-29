@@ -1,11 +1,11 @@
 package com.robert.passwordmanager.models
 
-sealed class PasswordItem {
-    data class Password(val account: Account): PasswordItem() {
+sealed class AccountListItem {
+    data class AccountItem(val account: Account): AccountListItem() {
         override val id: Int
             get() = account.id
     }
-    data class PasswordTitle(val title: String, val titleId: Int): PasswordItem(){
+    data class AccountHeaderItem(val title: String, val titleId: Int): AccountListItem(){
         override val id: Int
             get() = titleId
     }

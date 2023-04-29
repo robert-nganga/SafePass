@@ -117,7 +117,7 @@ class PasswordsAdapter(val context: Context,
             clipboard.setPrimaryClip(clip)
             // Only show a toast for Android 12 and lower.
             if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2)
-                Toast.makeText(itemView.context, "Copied Password", Toast.LENGTH_SHORT).show()
+                Toast.makeText(itemView.context, "Copied AccountItem", Toast.LENGTH_SHORT).show()
         }
     }
 }

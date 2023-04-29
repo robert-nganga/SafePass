@@ -94,7 +94,7 @@ class ToolsFragment : Fragment() {
         // Set the clipboard's primary clip.
         clipboard.setPrimaryClip(clip)
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2)
-            Toast.makeText(view.context, "Copied Password", Toast.LENGTH_SHORT).show()
+            Toast.makeText(view.context, "Copied AccountItem", Toast.LENGTH_SHORT).show()
     }
 
 

@@ -57,7 +57,7 @@ class VaultFragment : Fragment() {
         clipboard.setPrimaryClip(clip)
         // Only show a toast for Android 12 and lower.
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2)
-            Toast.makeText(requireContext(), "Copied Password", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Copied AccountItem", Toast.LENGTH_SHORT).show()
     }
 
     private fun deletePassword(passwordDetails: Account) {
