@@ -17,6 +17,7 @@ import com.robert.passwordmanager.R
 import com.robert.passwordmanager.adapters.AllPasswordsAdapter
 import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.ui.MainActivity
+import com.robert.passwordmanager.utils.OrderBy
 
 
 class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
@@ -24,7 +25,7 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     private lateinit var categories: Array<String>
     private lateinit var passwordViewModel: PasswordViewModel
     private lateinit var toolbar: MaterialToolbar
-    private lateinit var orderByItem: MenuItem
+    private lateinit var orderByItem: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,11 +63,11 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         toolbar.setOnMenuItemClickListener { menu->
             when(menu.itemId){
                 R.id.action_deleteAll -> {
+                    passwordViewModel.deleteAll()
                     true
                 }
                 R.id.action_orderBy -> {
-
-                    showPopup(toolbar)
+                    showPopup(orderByItem)
                     true
                 }
                 else -> false
@@ -98,9 +99,11 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     override fun onMenuItemClick(menu: MenuItem?): Boolean {
         return when (menu?.itemId){
             R.id.action_orderByDate ->{
+                passwordViewModel.setOrderBY(OrderBy.Date)
                 true
             }
             R.id.action_orderByCategory ->{
+                passwordViewModel.setOrderBY(OrderBy.Category)
                 true
             }
             else -> false

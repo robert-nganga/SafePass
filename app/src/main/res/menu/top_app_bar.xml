@@ -9,5 +9,5 @@
         android:id="@+id/action_orderBy"
         android:icon="@drawable/ic_baseline_sort_24"
         android:title="@string/order_by"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 </menu>

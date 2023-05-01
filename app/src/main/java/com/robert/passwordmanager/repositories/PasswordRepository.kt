@@ -10,4 +10,6 @@ interface PasswordRepository {
     suspend fun insert(passwordDetails: Account)
 
     suspend fun delete(passwordDetails: Account)
+
+    suspend fun deleteAll()
 }

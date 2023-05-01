@@ -21,4 +21,9 @@ class PasswordRepositoryImpl@Inject constructor(database: PasswordRoomDatabase):
         passwordDao.delete(passwordDetails)
     }
 
+    override suspend fun deleteAll() {
+        passwordDao.deleteAll()
+    }
+
+
 }

@@ -60,6 +60,10 @@ class PasswordViewModel @Inject constructor(
         return passwordManager.evaluatePassword(password)
     }
 
+    fun deleteAll() = viewModelScope.launch {
+        repository.deleteAll()
+    }
+
     fun getSizeOfEachCategory(categories: Array<String>, items: List<Account> ): Map<String, Int>{
         val sizeMap = mutableMapOf<String, Int>()
         categories.forEach { category ->
