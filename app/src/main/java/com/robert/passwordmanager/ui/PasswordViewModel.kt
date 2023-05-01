@@ -88,8 +88,7 @@ class PasswordViewModel @Inject constructor(
                     is OrderBy.Date -> {it.date}
                 }
             }.map { (category, passwords) ->
-                val headerId = passwords.first().id
-                AccountListItem.AccountHeaderItem(category, headerId)
+                AccountListItem.AccountHeaderItem(category, passwords.first().id)
             }
         val accountItems = items.map { AccountListItem.AccountItem(it) }
 

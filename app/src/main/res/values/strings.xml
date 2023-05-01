@@ -15,6 +15,9 @@
     <string name="vault">Vault</string>
     <string name="order_by_date">Order By Date</string>
     <string name="order_by_category">Order by Category</string>
+    <string name="search">Search</string>
+    <string name="home">Home</string>
+    <string name="tools">Tools</string>
     <string-array name="categories">
         <item>Cloud</item>
         <item>Application</item>

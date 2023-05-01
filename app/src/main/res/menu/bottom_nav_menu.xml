@@ -3,12 +3,12 @@
     <item
         android:id="@+id/homeFragment"
         android:icon="@drawable/ic_baseline_home_30"
-        android:title="Home" />
+        android:title="@string/home" />
 
     <item
         android:id="@+id/searchFragment"
         android:icon="@drawable/ic_baseline_search_30"
-        android:title="Search" />
+        android:title="@string/search" />
 
     <item
         android:id="@+id/placeholder"
@@ -16,11 +16,11 @@
 
     <item
         android:id="@+id/listFragment"
-        android:icon="@drawable/ic_baseline_view_list_30"
-        android:title="List" />
+        android:icon="@drawable/ic_baseline_lock_24"
+        android:title="@string/vault" />
 
     <item
         android:id="@+id/toolsFragment"
         android:icon="@drawable/ic_baseline_tune_30"
-        android:title="Tools" />
+        android:title="@string/tools" />
 </menu>

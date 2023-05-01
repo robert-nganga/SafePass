@@ -37,7 +37,7 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         passwordViewModel = (activity as MainActivity).passwordViewModel
         toolbar = view.findViewById(R.id.topAppBar)
         orderByItem = view.findViewById(R.id.action_orderBy)
-        toolbar.inflateMenu(R.menu.top_app_bar)
+        //toolbar.inflateMenu(R.menu.top_app_bar)
         setupMenuClickListener()
 
 
