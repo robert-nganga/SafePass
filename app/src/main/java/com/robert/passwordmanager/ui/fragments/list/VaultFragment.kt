@@ -9,13 +9,15 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.PopupMenu
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.snackbar.Snackbar
 import com.robert.passwordmanager.ui.PasswordViewModel
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.adapters.AllPasswordsAdapter
 import com.robert.passwordmanager.models.Account
+import com.robert.passwordmanager.models.AccountListItem
 import com.robert.passwordmanager.ui.MainActivity
 import com.robert.passwordmanager.utils.OrderBy
 
@@ -24,6 +26,8 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
     private lateinit var categories: Array<String>
     private lateinit var passwordViewModel: PasswordViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var allAccountsAdapter: AllPasswordsAdapter
     private lateinit var toolbar: MaterialToolbar
     private lateinit var orderByItem: View
 
@@ -37,27 +41,58 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         passwordViewModel = (activity as MainActivity).passwordViewModel
         toolbar = view.findViewById(R.id.topAppBar)
         orderByItem = view.findViewById(R.id.action_orderBy)
-        //toolbar.inflateMenu(R.menu.top_app_bar)
         setupMenuClickListener()
+        recyclerView = view.findViewById(R.id.mainRecyclerView)
+        setupRecyclerView()
 
 
-        val allPasswordsAdapter = AllPasswordsAdapter()
-        val mainRecyclerView = view?.findViewById<RecyclerView>(R.id.mainRecyclerView)
-        mainRecyclerView?.adapter = allPasswordsAdapter
-
-        val layoutManager = LinearLayoutManager(context)
-        layoutManager.orientation = RecyclerView.VERTICAL
-        mainRecyclerView?.layoutManager = layoutManager
-
-        allPasswordsAdapter.setCopyClickListener {
+        allAccountsAdapter.setCopyClickListener {
             copyPasswordToClipboard(it)
         }
 
         passwordViewModel.allAccountItems.observe(viewLifecycleOwner){
-            allPasswordsAdapter.submitList(it)
+            allAccountsAdapter.submitList(it)
         }
         return view
     }
+
+    private fun setupRecyclerView() {
+        allAccountsAdapter = AllPasswordsAdapter()
+
+        recyclerView.apply {
+            adapter = allAccountsAdapter
+            itemTouchHelper.attachToRecyclerView(this)
+        }
+    }
+
+    private val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+        ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+    ) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return true
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val accountListItem = allAccountsAdapter.currentList[viewHolder.adapterPosition]
+            when(accountListItem){
+                is AccountListItem.AccountItem ->{
+                    passwordViewModel.delete(accountListItem.account)
+                    Snackbar.make(requireView(), "Deleted", Snackbar.LENGTH_LONG)
+                        .setAction("Undo"){
+                            passwordViewModel.insert(accountListItem.account)
+                        }
+                        .show()
+                }
+                is AccountListItem.AccountHeaderItem -> {}
+            }
+
+        }
+    })
 
     private fun setupMenuClickListener() {
         toolbar.setOnMenuItemClickListener { menu->
