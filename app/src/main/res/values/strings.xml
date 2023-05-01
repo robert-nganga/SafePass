@@ -10,6 +10,9 @@
     <string name="pop_up_menu_copy">Copy Password</string>
     <string name="pop_up_menu_delete">Delete</string>
     <string name="vault_title">Vault</string>
+    <string name="order_by">OrderBy</string>
+    <string name="delete_all">Delete All</string>
+    <string name="vault">Vault</string>
     <string-array name="categories">
         <item>Cloud</item>
         <item>Application</item>
