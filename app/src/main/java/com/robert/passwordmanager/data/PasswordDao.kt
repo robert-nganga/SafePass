@@ -16,6 +16,8 @@ interface PasswordDao {
     @Delete
     suspend fun delete(passwordDetails: Account)
 
+    @Query("DELETE FROM password_table")
+    suspend fun deleteAll()
 
     @Query("SELECT * FROM password_table WHERE website_name LIKE :name")
     fun searchPasswordByName(name: String): Flow<List<Account>>

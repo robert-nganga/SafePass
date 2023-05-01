@@ -13,6 +13,8 @@
     <string name="order_by">OrderBy</string>
     <string name="delete_all">Delete All</string>
     <string name="vault">Vault</string>
+    <string name="order_by_date">Order By Date</string>
+    <string name="order_by_category">Order by Category</string>
     <string-array name="categories">
         <item>Cloud</item>
         <item>Application</item>
