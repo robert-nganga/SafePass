@@ -42,7 +42,7 @@ class AddPasswordActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_password)
         setSupportActionBar(findViewById(R.id.topAppBar))
         actionBar?.setDisplayHomeAsUpEnabled(true)
-        lytName = findViewById(R.id.textField)
+        lytName = findViewById(R.id.titleContainer)
         lytEmail = findViewById(R.id.emailsTextField)
         lytCategory = findViewById(R.id.spinner)
         lytPassword = findViewById(R.id.passwordTextField)

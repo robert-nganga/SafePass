@@ -18,6 +18,10 @@
     <string name="search">Search</string>
     <string name="home">Home</string>
     <string name="tools">Tools</string>
+    <string name="hint_title">Site/App name</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_category">Category</string>
+    <string name="hint_password">Password</string>
     <string-array name="categories">
         <item>Cloud</item>
         <item>Application</item>

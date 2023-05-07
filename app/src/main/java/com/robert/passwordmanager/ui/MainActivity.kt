@@ -57,9 +57,10 @@ class MainActivity : AppCompatActivity() {
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener {
-            val intent = Intent(this, AddPasswordActivity::class.java)
-            getResult.launch(intent)
-
+//            val intent = Intent(this, AddPasswordActivity::class.java)
+//            getResult.launch(intent)
+            navController.navigateUp()
+            navController.navigate(R.id.addAccountFragment)
         }
     }
 
