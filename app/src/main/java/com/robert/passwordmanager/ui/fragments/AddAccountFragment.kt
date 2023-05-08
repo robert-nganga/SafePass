@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.databinding.FragmentAddAccountBinding
 import androidx.core.widget.addTextChangedListener
-import com.robert.passwordmanager.utils.Validation
 import com.robert.passwordmanager.utils.Validation.validatePassword
 
 class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
@@ -31,8 +30,8 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
     }
 
     private fun passwordFocusListener() {
-        binding.txtPassword.addTextChangedListener {editable->
-            binding.passwordTextField.helperText = validatePassword(editable.toString())
+        binding.passwordText.addTextChangedListener {editable->
+            binding.passwordContainer.helperText = validatePassword(editable.toString())
         }
     }
 

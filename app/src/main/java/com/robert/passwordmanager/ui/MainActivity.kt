@@ -4,18 +4,21 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.robert.passwordmanager.R
+import com.robert.passwordmanager.databinding.ActivityMainBinding
 import com.robert.passwordmanager.models.Account
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
@@ -25,17 +28,8 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
-    private lateinit var bottomNavView: BottomNavigationView
-    private lateinit var bottomAppBar: BottomAppBar
 
-    private val getResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ){
-        if(it.resultCode == Activity.RESULT_OK){
-            passwordViewModel.insert(getPasswordDetails(it))
-            Log.i("MainActivity", "AccountItem added successfully")
-        }
-    }
+    private lateinit var binding: ActivityMainBinding
 
     val passwordViewModel: PasswordViewModel by viewModels()
 
@@ -43,15 +37,28 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        bottomNavView = findViewById(R.id.bottomNavigationView)
-        bottomAppBar = findViewById(R.id.bottomAppBar)
+
         val navHostFrag = supportFragmentManager.findFragmentById(R.id.nav_host_frag) as NavHostFragment
         navController = navHostFrag.navController
 
         // connect NavigationView with NavController
-        bottomNavView.setupWithNavController(navController)
+        binding.bottomNavigationView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when(destination.id){
+                R.id.addAccountFragment -> {
+                    binding.bottomAppBar.visibility = View.GONE
+                    binding.fab.visibility = View.GONE
+                }
+                else -> {
+                    binding.bottomAppBar.visibility = View.VISIBLE
+                    binding.fab.visibility = View.VISIBLE
+                }
+            }
+        }
 
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
