@@ -84,7 +84,7 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
                     passwordViewModel.delete(accountListItem.account)
                     Snackbar.make(requireView(), "Deleted", Snackbar.LENGTH_LONG)
                         .setAction("Undo"){
-                            passwordViewModel.insert(accountListItem.account)
+                            passwordViewModel.upsert(accountListItem.account)
                         }
                         .show()
                 }

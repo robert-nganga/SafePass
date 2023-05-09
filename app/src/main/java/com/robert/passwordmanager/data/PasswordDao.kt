@@ -10,8 +10,8 @@ interface PasswordDao {
     @Query("SELECT * FROM password_table ORDER BY id DESC")
     fun getAllPasswords(): Flow<List<Account>>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(passwordDetails: Account)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsert(passwordDetails: Account)
 
     @Delete
     suspend fun delete(passwordDetails: Account)

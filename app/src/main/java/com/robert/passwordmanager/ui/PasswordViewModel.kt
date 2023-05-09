@@ -1,5 +1,6 @@
 package com.robert.passwordmanager.ui
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.*
 import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.models.AccountListItem
@@ -9,6 +10,8 @@ import com.robert.passwordmanager.utils.PasswordManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,12 +47,26 @@ class PasswordViewModel @Inject constructor(
              isWithLetters, isWithNumbers, isWithSpecial, length)
     }
 
+    @SuppressLint("SimpleDateFormat")
+    fun createAccount(name: String, username: String, category: String, password: String){
+        val sdf = SimpleDateFormat("dd MMM, yyy")
+        val currentDate: String = sdf.format(Date())
+        val account = Account(
+            websiteName = name,
+            userName = username,
+            category = category,
+            password = password,
+            date = currentDate
+        )
+        upsert(account)
+    }
+
     fun setOrderBY(newOrder: OrderBy){
         _orderBy.value = newOrder
     }
 
-    fun insert(passwordDetails: Account) = viewModelScope.launch{
-        repository.insert(passwordDetails)
+    fun upsert(account: Account) = viewModelScope.launch{
+        repository.upsert(account)
     }
 
     fun delete(passwordDetails: Account) = viewModelScope.launch{
@@ -97,6 +114,17 @@ class PasswordViewModel @Inject constructor(
                 is OrderBy.Date -> { item.account.date == it.title }
                 is OrderBy.Category -> { item.account.category == it.title }
             } } }
+    }
+
+    fun validatePassword(password: String): String?{
+        return when {
+            password.length < 8 -> {"Must be more than 8 characters"}
+            !password.matches(".*[A-Z].*".toRegex()) -> {"Must contain Upper-case character"}
+            !password.matches(".*[a-z].*".toRegex()) -> {"Must contain Lower-case character"}
+            !password.matches(".*[0-9].*".toRegex()) -> {"Must contain a number"}
+            !password.matches(".*[!@$#^%*()_><.,:;|}{~`+=].*".toRegex()) -> {"Must contain special character"}
+            else->{null}
+        }
     }
 
 

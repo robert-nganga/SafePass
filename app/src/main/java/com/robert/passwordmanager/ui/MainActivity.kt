@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.marginBottom
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity() {
             when(destination.id){
                 R.id.addAccountFragment -> {
                     binding.bottomAppBar.visibility = View.GONE
+                    binding.navHostFrag.layoutParams
                     binding.fab.visibility = View.GONE
                 }
                 else -> {
@@ -63,9 +65,7 @@ class MainActivity : AppCompatActivity() {
 
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         fab.setOnClickListener {
-//            val intent = Intent(this, AddPasswordActivity::class.java)
-//            getResult.launch(intent)
-            navController.navigateUp()
+            //navController.navigateUp()
             navController.navigate(R.id.addAccountFragment)
         }
     }

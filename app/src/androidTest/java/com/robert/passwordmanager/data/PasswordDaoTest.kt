@@ -49,7 +49,7 @@ class PasswordDaoTest {
 
     @Test
     fun insert() = runTest {
-        passwordDao.insert(passwordDetails)
+        passwordDao.upsert(passwordDetails)
 
         val allPasswords = passwordDao.getAllPasswords().asLiveData().getOrAwaitValue()
         assertThat(allPasswords).contains(passwordDetails)
@@ -58,7 +58,7 @@ class PasswordDaoTest {
 
     @Test
     fun delete() = runTest {
-        passwordDao.insert(passwordDetails)
+        passwordDao.upsert(passwordDetails)
         passwordDao.delete(passwordDetails = passwordDetails)
 
         val allPasswords = passwordDao.getAllPasswords().asLiveData().getOrAwaitValue()
@@ -67,7 +67,7 @@ class PasswordDaoTest {
 
     @Test
     fun searchPassword() = runTest {
-        passwordDao.insert(passwordDetails)
+        passwordDao.upsert(passwordDetails)
 
         val passwords = passwordDao.searchPasswordByName("Google").asLiveData().getOrAwaitValue()
         assertThat(passwords).contains(passwordDetails)
