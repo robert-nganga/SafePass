@@ -19,7 +19,11 @@
         android:id="@+id/listFragment"
         android:name="com.robert.passwordmanager.ui.fragments.list.VaultFragment"
         android:label="List"
-        tools:layout="@layout/fragment_vault" />
+        tools:layout="@layout/fragment_vault" >
+        <action
+            android:id="@+id/action_listFragment_to_addAccountFragment"
+            app:destination="@id/addAccountFragment" />
+    </fragment>
     <fragment
         android:id="@+id/toolsFragment"
         android:name="com.robert.passwordmanager.ui.fragments.tools.ToolsFragment"
@@ -29,5 +33,9 @@
         android:id="@+id/addAccountFragment"
         android:name="com.robert.passwordmanager.ui.fragments.AddAccountFragment"
         android:label="AddAccountFragment"
-        tools:layout="@layout/fragment_add_account"/>
+        tools:layout="@layout/fragment_add_account">
+        <argument
+            android:name="id"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -7,6 +7,8 @@ interface PasswordRepository {
 
     fun searchPasswords(query: String): Flow<List<Account>>
 
+    fun getAccountById(id: Int): Flow<Account>
+
     suspend fun upsert(passwordDetails: Account)
 
     suspend fun delete(passwordDetails: Account)

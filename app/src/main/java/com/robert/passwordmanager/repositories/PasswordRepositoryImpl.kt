@@ -13,6 +13,8 @@ class PasswordRepositoryImpl@Inject constructor(database: PasswordRoomDatabase):
 
     override fun searchPasswords(query: String): Flow<List<Account>> = passwordDao.searchPasswordByName(query)
 
+    override fun getAccountById(id: Int): Flow<Account> = passwordDao.getAccountById(id)
+
     override suspend fun upsert(passwordDetails: Account) {
         passwordDao.upsert(passwordDetails)
     }
