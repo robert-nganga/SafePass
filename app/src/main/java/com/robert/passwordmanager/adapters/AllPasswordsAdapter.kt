@@ -23,6 +23,12 @@ class AllPasswordsAdapter(): ListAdapter<AccountListItem, RecyclerView.ViewHolde
         btnCopyClickListener = listener
     }
 
+    private var itemClickListener: ((Account)->Unit)? = null
+
+    fun itemClickListener(listener: (Account)-> Unit){
+        itemClickListener = listener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val passwordItem = LayoutInflater.from(parent.context).inflate(R.layout.vault_item, parent, false)
         val headerItem = LayoutInflater.from(parent.context).inflate(R.layout.password_header, parent, false)
@@ -44,8 +50,9 @@ class AllPasswordsAdapter(): ListAdapter<AccountListItem, RecyclerView.ViewHolde
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder){
             is AllPasswordsViewHolder -> {
-                val password = getItem(position) as AccountListItem.AccountItem
-                holder.setData(password.account, btnCopyClickListener)
+                val accountItem = getItem(position) as AccountListItem.AccountItem
+                holder.itemView.setOnClickListener { itemClickListener?.let { it(accountItem.account) } }
+                holder.setData(accountItem.account, btnCopyClickListener)
             }
             is PasswordHeaderViewHolder -> {
                 val header = getItem(position) as AccountListItem.AccountHeaderItem

@@ -36,6 +36,7 @@
         tools:layout="@layout/fragment_add_account">
         <argument
             android:name="id"
-            app:argType="integer" />
+            app:argType="integer"
+            android:defaultValue="-1"/>
     </fragment>
 </navigation>

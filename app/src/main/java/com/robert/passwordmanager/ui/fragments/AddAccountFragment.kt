@@ -9,8 +9,10 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.databinding.FragmentAddAccountBinding
+import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.ui.MainActivity
 import com.robert.passwordmanager.ui.PasswordViewModel
 
@@ -21,6 +23,7 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
     private val binding get() = _binding!!
 
     private lateinit var passwordViewModel: PasswordViewModel
+    private val args: AddAccountFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +49,23 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
         binding.extendedFab.setOnClickListener {
             validateInputs()
         }
+        if (args.id != -1){
+            passwordViewModel.setId(args.id)
+        }
+        passwordViewModel.account.observe(viewLifecycleOwner){ account->
+            initializeAccountDetails(account)
+        }
 
+    }
+
+    private fun initializeAccountDetails(account: Account){
+        binding.apply {
+            nameText.setText(account.websiteName)
+            userNameText.setText(account.userName)
+            categorySpinner.setText(account.category)
+            passwordText.setText(account.password)
+
+        }
     }
 
 
