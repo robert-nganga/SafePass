@@ -9,6 +9,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
@@ -45,6 +46,13 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         recyclerView = view.findViewById(R.id.mainRecyclerView)
         setupRecyclerView()
 
+        allAccountsAdapter.itemClickListener {
+            val bundle = Bundle().apply {
+                putInt("id", it.id)
+            }
+            findNavController().navigate(R.id.action_listFragment_to_addAccountFragment, bundle)
+        }
+
 
         allAccountsAdapter.setCopyClickListener {
             copyPasswordToClipboard(it)
@@ -62,6 +70,7 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         recyclerView.apply {
             adapter = allAccountsAdapter
             itemTouchHelper.attachToRecyclerView(this)
+            itemAnimator = null
         }
     }
 

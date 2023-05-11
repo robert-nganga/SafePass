@@ -2,6 +2,7 @@ package com.robert.passwordmanager.ui.fragments
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +38,17 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         passwordViewModel = (activity as MainActivity).passwordViewModel
+        val isNewAccount = (args.id == -1)
+
+        if (!isNewAccount){
+            Log.i("AddAccountFragment", "setId called for id ${args.id}")
+            passwordViewModel.setId(args.id)
+
+            passwordViewModel.account.observe(viewLifecycleOwner){ account->
+                initializeAccountDetails(account)
+                Log.i("AddAccountFragment", account.userName)
+            }
+        }
 
         val categories = resources.getStringArray(R.array.categories)
 
@@ -49,12 +61,8 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
         binding.extendedFab.setOnClickListener {
             validateInputs()
         }
-        if (args.id != -1){
-            passwordViewModel.setId(args.id)
-        }
-        passwordViewModel.account.observe(viewLifecycleOwner){ account->
-            initializeAccountDetails(account)
-        }
+
+
 
     }
 
