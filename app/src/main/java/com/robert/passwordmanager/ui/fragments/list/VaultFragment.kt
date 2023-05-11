@@ -90,10 +90,10 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
             val accountListItem = allAccountsAdapter.currentList[viewHolder.adapterPosition]
             when(accountListItem){
                 is AccountListItem.AccountItem ->{
-                    passwordViewModel.delete(accountListItem.account)
+                    passwordViewModel.deleteAccount(accountListItem.account)
                     Snackbar.make(requireView(), "Deleted", Snackbar.LENGTH_LONG)
                         .setAction("Undo"){
-                            passwordViewModel.upsert(accountListItem.account)
+                            passwordViewModel.insertAccount(accountListItem.account)
                         }
                         .show()
                 }
@@ -137,7 +137,7 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     }
 
     private fun deletePassword(passwordDetails: Account) {
-        passwordViewModel.delete(passwordDetails)
+        passwordViewModel.deleteAccount(passwordDetails)
     }
 
     override fun onMenuItemClick(menu: MenuItem?): Boolean {

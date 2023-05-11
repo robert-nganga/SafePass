@@ -13,8 +13,11 @@ interface PasswordDao {
     @Query("SELECT * FROM password_table where id = :id")
     fun getAccountById(id: Int): Flow<Account>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsert(passwordDetails: Account)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insert(account: Account)
+
+    @Update
+    suspend fun update(account: Account)
 
     @Delete
     suspend fun delete(passwordDetails: Account)

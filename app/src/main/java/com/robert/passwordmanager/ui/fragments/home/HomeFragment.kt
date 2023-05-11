@@ -57,7 +57,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun deletePassword(passwordDetails: Account) {
-        passwordViewModel.delete(passwordDetails)
+        passwordViewModel.deleteAccount(passwordDetails)
     }
 
 

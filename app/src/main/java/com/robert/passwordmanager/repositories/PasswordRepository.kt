@@ -9,9 +9,11 @@ interface PasswordRepository {
 
     fun getAccountById(id: Int): Flow<Account>
 
-    suspend fun upsert(passwordDetails: Account)
+    suspend fun insert(account: Account)
 
-    suspend fun delete(passwordDetails: Account)
+    suspend fun update(account: Account)
+
+    suspend fun delete(account: Account)
 
     suspend fun deleteAll()
 }

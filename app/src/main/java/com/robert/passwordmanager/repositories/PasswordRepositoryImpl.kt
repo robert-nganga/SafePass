@@ -7,24 +7,28 @@ import javax.inject.Inject
 
 class PasswordRepositoryImpl@Inject constructor(database: PasswordRoomDatabase): PasswordRepository{
 
-    private val passwordDao = database.passwordDao()
+    private val accountDao = database.passwordDao()
 
-    val allPasswords: Flow<List<Account>> = passwordDao.getAllPasswords()
+    val allAccounts: Flow<List<Account>> = accountDao.getAllPasswords()
 
-    override fun searchPasswords(query: String): Flow<List<Account>> = passwordDao.searchPasswordByName(query)
+    override fun searchPasswords(query: String): Flow<List<Account>> = accountDao.searchPasswordByName(query)
 
-    override fun getAccountById(id: Int): Flow<Account> = passwordDao.getAccountById(id)
+    override fun getAccountById(id: Int): Flow<Account> = accountDao.getAccountById(id)
 
-    override suspend fun upsert(passwordDetails: Account) {
-        passwordDao.upsert(passwordDetails)
+    override suspend fun insert(account: Account) {
+        accountDao.insert(account)
     }
 
-    override suspend fun delete(passwordDetails: Account) {
-        passwordDao.delete(passwordDetails)
+    override suspend fun update(account: Account) {
+        accountDao.update(account)
+    }
+
+    override suspend fun delete(account: Account) {
+        accountDao.delete(account)
     }
 
     override suspend fun deleteAll() {
-        passwordDao.deleteAll()
+        accountDao.deleteAll()
     }
 
 

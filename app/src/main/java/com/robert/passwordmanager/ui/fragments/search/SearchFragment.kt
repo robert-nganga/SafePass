@@ -53,7 +53,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun deletePassword(passwordDetails: Account) {
-        passwordViewModel.delete(passwordDetails)
+        passwordViewModel.deleteAccount(passwordDetails)
     }
 
     private fun searchPasswords(newText: String?, passwordsAdapter: PasswordsAdapter) {

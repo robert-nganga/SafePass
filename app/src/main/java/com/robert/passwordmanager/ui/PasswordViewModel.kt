@@ -25,7 +25,7 @@ class PasswordViewModel @Inject constructor(
         repository.getAccountById(id).asLiveData()
     }
 
-    val allAccounts: LiveData<List<Account>> = repository.allPasswords.asLiveData()
+    val allAccounts: LiveData<List<Account>> = repository.allAccounts.asLiveData()
 
     private var _orderBy = MutableLiveData<OrderBy>(OrderBy.Category)
 
@@ -64,7 +64,7 @@ class PasswordViewModel @Inject constructor(
             password = password,
             date = currentDate
         )
-        upsert(account)
+        insertAccount(account)
     }
 
     fun setOrderBY(newOrder: OrderBy){
@@ -75,11 +75,15 @@ class PasswordViewModel @Inject constructor(
         _id.value = newId
     }
 
-    fun upsert(account: Account) = viewModelScope.launch{
-        repository.upsert(account)
+    fun insertAccount(account: Account) = viewModelScope.launch{
+        repository.insert(account)
     }
 
-    fun delete(passwordDetails: Account) = viewModelScope.launch{
+    fun updateAccount(account: Account) = viewModelScope.launch {
+        repository.update(account)
+    }
+
+    fun deleteAccount(passwordDetails: Account) = viewModelScope.launch{
         repository.delete(passwordDetails)
     }
 
