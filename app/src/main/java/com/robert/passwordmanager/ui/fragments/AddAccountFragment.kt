@@ -41,12 +41,11 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
         val isNewAccount = (args.id == -1)
 
         if (!isNewAccount){
-            Log.i("AddAccountFragment", "setId called for id ${args.id}")
             passwordViewModel.setId(args.id)
 
+            //Observe account
             passwordViewModel.account.observe(viewLifecycleOwner){ account->
                 initializeAccountDetails(account)
-                Log.i("AddAccountFragment", account.userName)
             }
         }
 
@@ -76,6 +75,15 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
         }
     }
 
+    private fun getAccount(): Account {
+        val selectedCategory: String = (binding.categoryContainer.editText as AutoCompleteTextView).text.toString()
+        return passwordViewModel.createAccount(
+            name = binding.nameText.text.toString(),
+            username = binding.userNameText.text.toString(),
+            category = selectedCategory,
+            password = binding.passwordText.text.toString()
+        )
+    }
 
     private fun validateInputs(){
         val passwordValid = passwordViewModel.validatePassword(binding.passwordText.text.toString())
@@ -93,13 +101,12 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
                 binding.passwordContainer.helperText = passwordValid
             }
             else ->{
-                val selectedCategory: String = (binding.categoryContainer.editText as AutoCompleteTextView).text.toString()
-                passwordViewModel.createAccount(
-                    name = binding.nameText.text.toString(),
-                    username = binding.userNameText.text.toString(),
-                    category = selectedCategory,
-                    password = binding.passwordText.text.toString()
-                )
+                val account = getAccount()
+                if (args.id == -1){
+                    passwordViewModel.insertAccount(account)
+                }else{
+                    passwordViewModel.updateAccount(account.copy(id = args.id))
+                }
                 findNavController().popBackStack()
             }
 

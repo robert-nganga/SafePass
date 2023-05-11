@@ -92,6 +92,7 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
                 is AccountListItem.AccountItem ->{
                     passwordViewModel.deleteAccount(accountListItem.account)
                     Snackbar.make(requireView(), "Deleted", Snackbar.LENGTH_LONG)
+                        .setAnchorView((activity as MainActivity).findViewById(R.id.bottomAppBar))
                         .setAction("Undo"){
                             passwordViewModel.insertAccount(accountListItem.account)
                         }

@@ -54,17 +54,16 @@ class PasswordViewModel @Inject constructor(
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun createAccount(name: String, username: String, category: String, password: String){
+    fun createAccount(name: String, username: String, category: String, password: String): Account {
         val sdf = SimpleDateFormat("dd MMM, yyy")
         val currentDate: String = sdf.format(Date())
-        val account = Account(
+        return Account(
             websiteName = name,
             userName = username,
             category = category,
             password = password,
             date = currentDate
         )
-        insertAccount(account)
     }
 
     fun setOrderBY(newOrder: OrderBy){

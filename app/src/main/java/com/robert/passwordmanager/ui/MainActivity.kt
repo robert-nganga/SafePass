@@ -1,29 +1,17 @@
 package com.robert.passwordmanager.ui
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.core.view.marginBottom
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomappbar.BottomAppBar
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.databinding.ActivityMainBinding
-import com.robert.passwordmanager.models.Account
 import dagger.hilt.android.AndroidEntryPoint
-import java.text.SimpleDateFormat
-import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -68,18 +56,5 @@ class MainActivity : AppCompatActivity() {
             //navController.navigateUp()
             navController.navigate(R.id.addAccountFragment)
         }
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private fun getPasswordDetails(result: ActivityResult?): Account {
-        val sdf = SimpleDateFormat("dd MMM, yyy")
-        val currentDate: String = sdf.format(Date())
-        return Account(
-            websiteName = result?.data?.getStringExtra("name")!!,
-            userName = result.data?.getStringExtra("email")!!,
-            category = result.data?.getStringExtra("category")!!,
-            password = result.data?.getStringExtra("password")!!,
-            date = currentDate
-        )
     }
 }
