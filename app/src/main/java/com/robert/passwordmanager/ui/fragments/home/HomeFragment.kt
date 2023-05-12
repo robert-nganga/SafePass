@@ -33,10 +33,10 @@ class HomeFragment : Fragment() {
         passwordViewModel = (activity as MainActivity).passwordViewModel
 
         val categories = resources.getStringArray(R.array.categories)
-        txtWebsites = view.findViewById(R.id.txtWebsite)
-        txtApps = view.findViewById(R.id.txtApplications)
-        txtCloud = view.findViewById(R.id.txtCloud)
-        txtPayment = view.findViewById(R.id.txtPayment)
+//        txtWebsites = view.findViewById(R.id.txtWebsite)
+//        txtApps = view.findViewById(R.id.txtApplications)
+//        txtCloud = view.findViewById(R.id.txtCloud)
+//        txtPayment = view.findViewById(R.id.txtPayment)
 
         val passwordsAdapter = PasswordsAdapter(requireContext()) { deletePassword(it) }
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recentRv)
@@ -50,7 +50,7 @@ class HomeFragment : Fragment() {
         passwordViewModel.allAccounts.observe(viewLifecycleOwner) { list ->
             list.let {
                 passwordsAdapter.updateList(it)
-                updateTextViews(passwordViewModel.getSizeOfEachCategory(categories, it))
+                //updateTextViews(passwordViewModel.getSizeOfEachCategory(categories, it))
             }
         }
         return view
@@ -61,13 +61,13 @@ class HomeFragment : Fragment() {
     }
 
 
-    @SuppressLint("SetTextI18n")
-    private fun updateTextViews(sizeMap: Map<String, Int>) {
-        txtWebsites.text = sizeMap["Website"].toString() + " websites"
-        txtApps.text = sizeMap["Application"].toString() + " apps"
-        txtPayment.text = sizeMap["Payment"].toString() + " wallets"
-        txtCloud.text = sizeMap["Cloud"].toString() + " passwords"
-    }
+//    @SuppressLint("SetTextI18n")
+//    private fun updateTextViews(sizeMap: Map<String, Int>) {
+//        txtWebsites.text = sizeMap["Website"].toString() + " websites"
+//        txtApps.text = sizeMap["Application"].toString() + " apps"
+//        txtPayment.text = sizeMap["Payment"].toString() + " wallets"
+//        txtCloud.text = sizeMap["Cloud"].toString() + " passwords"
+//    }
 
 
 
