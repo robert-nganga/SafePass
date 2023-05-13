@@ -14,6 +14,7 @@ import com.robert.passwordmanager.adapters.PasswordsAdapter
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.ui.MainActivity
+import com.robert.passwordmanager.ui.health_indicator.CustomHealthIndicator
 
 
 class HomeFragment : Fragment() {
@@ -38,6 +39,8 @@ class HomeFragment : Fragment() {
 //        txtCloud = view.findViewById(R.id.txtCloud)
 //        txtPayment = view.findViewById(R.id.txtPayment)
 
+        val healthIndicator = view?.findViewById<CustomHealthIndicator>(R.id.image)
+        healthIndicator?.setForegroundSweepAngle(180f)
         val passwordsAdapter = PasswordsAdapter(requireContext()) { deletePassword(it) }
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recentRv)
         recyclerView?.adapter = passwordsAdapter
