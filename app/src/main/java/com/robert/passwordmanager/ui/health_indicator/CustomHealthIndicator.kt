@@ -28,24 +28,33 @@ class CustomHealthIndicator(context: Context, attrs: AttributeSet?): View(contex
     private var backgroundPaint = Paint().apply {
         color = backgroundIndicatorColor
         style = Paint.Style.STROKE
+        isAntiAlias = true
         strokeWidth = 30f
         strokeCap = Paint.Cap.ROUND
     }
     private var foregroundPaint = Paint().apply {
         color = foregroundIndicatorColor
         style = Paint.Style.STROKE
+        isAntiAlias = true
         strokeWidth = 30f
         strokeCap = Paint.Cap.ROUND
     }
 
     private var textPaint = Paint().apply {
-        color = foregroundIndicatorColor
-        style = Paint.Style.STROKE
-        strokeWidth = 18f
-        strokeCap = Paint.Cap.ROUND
+        color = Color.WHITE
+        isAntiAlias = true
+        textSize = 80f
+        textAlign = Paint.Align.CENTER
+    }
+
+    private var labelTextPaint = Paint().apply {
+        color = Color.WHITE
+        textSize = 40f
+        isAntiAlias = true
+        textAlign = Paint.Align.CENTER
     }
     private var sweepAngleAnimator = ValueAnimator.ofFloat(0.0f, 1.0f).apply {
-        duration = 1000 // set the animation duration
+        duration = 2000 // set the animation duration
         interpolator = LinearInterpolator()
         addUpdateListener { animator->
             val value = animator.animatedValue as Float
@@ -70,5 +79,8 @@ class CustomHealthIndicator(context: Context, attrs: AttributeSet?): View(contex
         canvas?.drawArc((width * 0.10).toFloat(), (height * 0.10).toFloat(),
             (width/1.10).toFloat(), height.toFloat(), 150f, sweepAngle, false, foregroundPaint)
 
+        val text = "${(sweepAngle / 180 * 100).toInt()}%"
+        canvas?.drawText(text, (width/2).toFloat(), (height/2).toFloat(), textPaint)
+        canvas?.drawText("Health Score", (width/2).toFloat(), (height*0.8).toFloat(), labelTextPaint)
     }
 }
