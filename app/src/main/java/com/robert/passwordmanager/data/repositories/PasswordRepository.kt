@@ -1,4 +1,4 @@
-package com.robert.passwordmanager.repositories
+package com.robert.passwordmanager.data.repositories
 
 import com.robert.passwordmanager.models.Account
 import kotlinx.coroutines.flow.Flow

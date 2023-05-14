@@ -1,4 +1,4 @@
-package com.robert.passwordmanager.data
+package com.robert.passwordmanager.data.local
 
 import androidx.room.*
 import com.robert.passwordmanager.models.Account

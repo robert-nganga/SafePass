@@ -1,4 +1,4 @@
-package com.robert.passwordmanager.data
+package com.robert.passwordmanager.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

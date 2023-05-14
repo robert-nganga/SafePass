@@ -7,6 +7,8 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
+import com.robert.passwordmanager.data.local.PasswordDao
+import com.robert.passwordmanager.data.local.PasswordRoomDatabase
 import com.robert.passwordmanager.getOrAwaitValue
 import com.robert.passwordmanager.models.Account
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -1,7 +1,7 @@
-package com.robert.passwordmanager.repositories
+package com.robert.passwordmanager.data.repositories
 
 import com.robert.passwordmanager.models.Account
-import com.robert.passwordmanager.data.PasswordRoomDatabase
+import com.robert.passwordmanager.data.local.PasswordRoomDatabase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

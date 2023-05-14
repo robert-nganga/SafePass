@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.*
 import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.models.AccountListItem
-import com.robert.passwordmanager.repositories.PasswordRepositoryImpl
+import com.robert.passwordmanager.data.repositories.PasswordRepositoryImpl
 import com.robert.passwordmanager.utils.OrderBy
 import com.robert.passwordmanager.utils.PasswordManager
 import dagger.hilt.android.lifecycle.HiltViewModel

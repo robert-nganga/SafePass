@@ -3,7 +3,7 @@ package com.robert.passwordmanager.di
 import android.content.Context
 import androidx.room.Room
 import com.robert.passwordmanager.utils.PasswordManager
-import com.robert.passwordmanager.data.PasswordRoomDatabase
+import com.robert.passwordmanager.data.local.PasswordRoomDatabase
 import com.robert.passwordmanager.utils.Contants.PASSWORD_DATABASE
 import dagger.Module
 import dagger.Provides
