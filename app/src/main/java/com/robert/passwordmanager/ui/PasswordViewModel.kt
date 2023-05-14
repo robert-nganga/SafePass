@@ -27,6 +27,10 @@ class PasswordViewModel @Inject constructor(
 
     val allAccounts: LiveData<List<Account>> = repository.allAccounts.asLiveData()
 
+    val averagePasswordStrength = allAccounts.map { accounts->
+        getAverage(accounts)
+    }
+
     private var _orderBy = MutableLiveData<OrderBy>(OrderBy.Category)
 
     val allAccountItems = MediatorLiveData<List<AccountListItem>>().apply {
@@ -63,7 +67,7 @@ class PasswordViewModel @Inject constructor(
             category = category,
             password = password,
             date = currentDate,
-            passwordStrength = evaluatePassword(password)
+            passwordStrength = evaluatePassword(password).toDouble()
         )
     }
 
@@ -95,18 +99,9 @@ class PasswordViewModel @Inject constructor(
         repository.deleteAll()
     }
 
-    fun getSizeOfEachCategory(categories: Array<String>, items: List<Account> ): Map<String, Int>{
-        val sizeMap = mutableMapOf<String, Int>()
-        categories.forEach { category ->
-            var size = 0
-            items.forEach { item ->
-                if(category == item.category){
-                    size++
-                }
-            }
-            sizeMap[category] = size
-        }
-        return sizeMap
+    private fun getAverage(accounts: List<Account>): Float {
+        val strengthSum = accounts.sumOf { it.passwordStrength }
+        return (strengthSum / accounts.size).toFloat()
     }
 
     private fun getAccountListItems(items: List<Account>, orderBy: OrderBy): List<AccountListItem> {

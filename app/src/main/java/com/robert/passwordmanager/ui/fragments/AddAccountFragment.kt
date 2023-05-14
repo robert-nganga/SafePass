@@ -2,20 +2,16 @@ package com.robert.passwordmanager.ui.fragments
 
 import android.graphics.Color
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.textfield.TextInputLayout
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.databinding.FragmentAddAccountBinding
 import com.robert.passwordmanager.models.Account

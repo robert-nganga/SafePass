@@ -42,6 +42,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.image.setForegroundSweepAngle(180f)
         setupRecyclerView()
 
+        passwordViewModel.averagePasswordStrength.observe(viewLifecycleOwner){averageStrength->
+
+        }
+
 
         passwordViewModel.allAccounts.observe(viewLifecycleOwner) { list ->
             list.let {
