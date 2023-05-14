@@ -12,42 +12,35 @@ import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.ui.PasswordViewModel
 import com.robert.passwordmanager.adapters.PasswordsAdapter
 import com.robert.passwordmanager.R
+import com.robert.passwordmanager.databinding.FragmentHomeBinding
 import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.ui.MainActivity
 import com.robert.passwordmanager.ui.health_indicator.CustomHealthIndicator
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private lateinit var passwordViewModel: PasswordViewModel
-    private lateinit var txtWebsites: TextView
-    private lateinit var txtApps: TextView
-    private lateinit var txtCloud: TextView
-    private lateinit var txtPayment: TextView
+    private lateinit var passwordsAdapter: PasswordsAdapter
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         passwordViewModel = (activity as MainActivity).passwordViewModel
 
         val categories = resources.getStringArray(R.array.categories)
-//        txtWebsites = view.findViewById(R.id.txtWebsite)
-//        txtApps = view.findViewById(R.id.txtApplications)
-//        txtCloud = view.findViewById(R.id.txtCloud)
-//        txtPayment = view.findViewById(R.id.txtPayment)
-
-        val healthIndicator = view?.findViewById<CustomHealthIndicator>(R.id.image)
-        healthIndicator?.setForegroundSweepAngle(180f)
-        val passwordsAdapter = PasswordsAdapter(requireContext()) { deletePassword(it) }
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.recentRv)
-        recyclerView?.adapter = passwordsAdapter
-
-        val layoutManager = LinearLayoutManager(context)
-        layoutManager.orientation = RecyclerView.VERTICAL
-        recyclerView?.layoutManager = layoutManager
+        binding.image.setForegroundSweepAngle(180f)
+        setupRecyclerView()
 
 
         passwordViewModel.allAccounts.observe(viewLifecycleOwner) { list ->
@@ -56,23 +49,19 @@ class HomeFragment : Fragment() {
                 //updateTextViews(passwordViewModel.getSizeOfEachCategory(categories, it))
             }
         }
-        return view
+    }
+
+    private fun setupRecyclerView() {
+        passwordsAdapter = PasswordsAdapter(requireContext()) { deletePassword(it) }
+        val myLayoutManager = LinearLayoutManager(context)
+        myLayoutManager.orientation = RecyclerView.VERTICAL
+        binding.recentRv.apply {
+            adapter = passwordsAdapter
+            layoutManager = myLayoutManager
+        }
     }
 
     private fun deletePassword(passwordDetails: Account) {
         passwordViewModel.deleteAccount(passwordDetails)
     }
-
-
-//    @SuppressLint("SetTextI18n")
-//    private fun updateTextViews(sizeMap: Map<String, Int>) {
-//        txtWebsites.text = sizeMap["Website"].toString() + " websites"
-//        txtApps.text = sizeMap["Application"].toString() + " apps"
-//        txtPayment.text = sizeMap["Payment"].toString() + " wallets"
-//        txtCloud.text = sizeMap["Cloud"].toString() + " passwords"
-//    }
-
-
-
-
 }
