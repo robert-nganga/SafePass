@@ -5,7 +5,9 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="extended_fab_label">Save Details</string>
-    <string name="page_title">Add password details</string>
+    <string name="extended_fab_update_label">Update Details</string>
+    <string name="page_title">Add account details</string>
+    <string name="update_page_title">Update account details</string>
     <string name="search_title">Search</string>
     <string name="pop_up_menu_copy">Copy Password</string>
     <string name="pop_up_menu_delete">Delete</string>
@@ -22,6 +24,8 @@
     <string name="hint_username">Username</string>
     <string name="hint_category">Category</string>
     <string name="hint_password">Password</string>
+    <string name="required">Required</string>
+    <string name="password_helper_text">Must contain more than 8 characters</string>
     <string-array name="categories">
         <item>Cloud</item>
         <item>Application</item>

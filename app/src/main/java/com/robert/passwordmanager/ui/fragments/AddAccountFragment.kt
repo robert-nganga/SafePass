@@ -1,5 +1,6 @@
 package com.robert.passwordmanager.ui.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -8,9 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.textfield.TextInputLayout
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.databinding.FragmentAddAccountBinding
 import com.robert.passwordmanager.models.Account
@@ -41,6 +46,8 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
         val isNewAccount = (args.id == -1)
 
         if (!isNewAccount){
+            binding.toolBar.title = resources.getString(R.string.update_page_title)
+            binding.extendedFab.text = resources.getString(R.string.extended_fab_update_label)
             passwordViewModel.setId(args.id)
 
             //Observe account
@@ -48,21 +55,83 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
                 initializeAccountDetails(account)
             }
         }
+        setupAutoCompleteTextView()
 
+        //Input validation
+        nameFocusListener()
+        usernameFocusListener()
+        categoryFocusListener()
+        passwordTextChangeListener()
+
+
+        binding.extendedFab.setOnClickListener {
+            validateInputs()
+        }
+    }
+
+    private fun passwordTextChangeListener() {
+        binding.passwordText.addTextChangedListener{editable->
+            val strength = passwordViewModel.evaluatePassword(editable.toString())
+            val helperView = binding.passwordContainer.findViewById<View>(com.google.android.material.R.id.textinput_helper_text)
+            val tvHelper = helperView as TextView
+
+            if (editable.toString().length > 8){
+                binding.passwordContainer.helperText = when (strength) {
+                    in 0.0 .. 0.5 -> {
+                        tvHelper.setTextColor(Color.RED)
+                        "Weak"
+                    }
+                    in 0.5 .. 0.7 -> {
+                        tvHelper.setTextColor(Color.YELLOW)
+                        "Strong"
+                    }
+                    in 0.7 .. 1.0 -> {
+                        tvHelper.setTextColor(Color.GREEN)
+                        "Very strong"
+                    }
+                    else -> {""}
+                }
+            }
+        }
+    }
+
+    private fun categoryFocusListener() {
+        binding.categorySpinner.addTextChangedListener{editable->
+            if (editable.toString().isNotEmpty()){
+                binding.categoryContainer.helperText = null
+            }else{
+                binding.categoryContainer.helperText = "Required"
+            }
+        }
+    }
+
+    private fun usernameFocusListener() {
+        binding.userNameText.addTextChangedListener{editable->
+            if (editable.toString().isNotEmpty()){
+                binding.userNameContainer.helperText = null
+            }else{
+                binding.userNameContainer.helperText = "Required"
+            }
+        }
+    }
+
+    private fun nameFocusListener() {
+        binding.nameText.addTextChangedListener{editable->
+            if (editable.toString().isNotEmpty()){
+                binding.nameContainer.helperText = null
+            }else{
+                binding.nameContainer.helperText = "Required"
+            }
+        }
+    }
+
+    private fun setupAutoCompleteTextView() {
         val categories = resources.getStringArray(R.array.categories)
 
         val categoryAdapter = ArrayAdapter(requireContext(),
             R.layout.dropdown_item,
             categories)
         binding.categorySpinner.setAdapter(categoryAdapter)
-
-
-        binding.extendedFab.setOnClickListener {
-            validateInputs()
-        }
-
-
-
     }
 
     private fun initializeAccountDetails(account: Account){
@@ -86,31 +155,21 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
     }
 
     private fun validateInputs(){
-        val passwordValid = passwordViewModel.validatePassword(binding.passwordText.text.toString())
-        when{
-            TextUtils.isEmpty(binding.nameText.text) -> {
-                binding.nameContainer.helperText = "Required"
-            }
-            TextUtils.isEmpty(binding.userNameText.text) -> {
-                binding.userNameContainer.helperText = "Required"
-            }
-            TextUtils.isEmpty(binding.categorySpinner.text) -> {
-                binding.categoryContainer.helperText = "Required"
-            }
-            passwordValid != null -> {
-                binding.passwordContainer.helperText = passwordValid
-            }
-            else ->{
-                val account = getAccount()
-                if (args.id == -1){
-                    passwordViewModel.insertAccount(account)
-                }else{
-                    passwordViewModel.updateAccount(account.copy(id = args.id))
-                }
-                findNavController().popBackStack()
-            }
+        val passwordValid = binding.passwordText.text.toString().length > 8
+        val nameValid = binding.nameContainer.helperText == null
+        val userNameValid = binding.userNameContainer.helperText == null
+        val categoryValid = binding.categoryContainer.helperText == null
 
+        if (passwordValid && nameValid && userNameValid && categoryValid) {
+            val account = getAccount()
+            if (args.id == -1){
+                passwordViewModel.insertAccount(account)
+            }else{
+                passwordViewModel.updateAccount(account.copy(id = args.id))
+            }
+            findNavController().popBackStack()
         }
+
     }
 
 
