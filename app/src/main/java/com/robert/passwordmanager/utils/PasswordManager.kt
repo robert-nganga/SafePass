@@ -4,12 +4,12 @@ import java.util.logging.Logger
 
 class PasswordManager {
 
-    private val letters : String = "abcdefghijklmnopqrstuvwxyz"
-    private val uppercaseLetters : String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    private val numbers : String = "0123456789"
-    private val special : String = "@#=+!£$%&?-"
-    private val maxPasswordLength : Float = 20F //Max password lenght that my app creates
-    private val maxPasswordFactor : Float = 10F //Max password factor based on chars inside password
+    private val letters: String = "abcdefghijklmnopqrstuvwxyz"
+    private val uppercaseLetters: String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    private val numbers: String = "0123456789"
+    private val special: String = "@#=+!£$%&?-"
+    private val maxPasswordLength: Float = 20F //Max password lenght that my app creates
+    private val maxPasswordFactor: Float = 10F //Max password factor based on chars inside password
     //  see evaluatePassword function below
 
     companion object {
@@ -34,12 +34,22 @@ class PasswordManager {
     ): String {
         val charSets = mutableListOf<String>()
 
-        if (isWithLetters) { charSets.add(this.letters) }
-        if (isWithUppercase) { charSets.add(this.uppercaseLetters) }
-        if (isWithNumbers) { charSets.add(this.numbers) }
-        if (isWithSpecial) { charSets.add(this.special) }
+        if (isWithLetters) {
+            charSets.add(this.letters)
+        }
+        if (isWithUppercase) {
+            charSets.add(this.uppercaseLetters)
+        }
+        if (isWithNumbers) {
+            charSets.add(this.numbers)
+        }
+        if (isWithSpecial) {
+            charSets.add(this.special)
+        }
 
-        if (charSets.size < 1) { return "" }
+        if (charSets.size < 1) {
+            return ""
+        }
 
         var result = charSets.joinToString("")
         if (isWithLetters && isWithUppercase && isWithNumbers && isWithSpecial) {
@@ -58,17 +68,31 @@ class PasswordManager {
      * @param passwordToTest String with the password to test
      * @return a number from 0 to 1, 0 is a very bad password and 1 is a perfect password
      */
-    fun evaluatePassword(passwordToTest: String) : Float {
-
-        var factor = 0
+    fun evaluatePassword(passwordToTest: String): Float {
         val length = passwordToTest.length
+        var factor = 0f
 
-        if( passwordToTest.matches( Regex(".*["+this.letters+"].*") ) ) { factor += 2 }
-        if( passwordToTest.matches( Regex(".*["+this.uppercaseLetters+"].*") ) ){ factor += 2 }
-        if( passwordToTest.matches( Regex(".*["+this.numbers+"].*") ) ){ factor += 1 }
-        if( passwordToTest.matches( Regex(".*["+this.special+"].*") ) ){ factor += 5 }
+        // Check for each type of character in the password
+        for (character in passwordToTest) {
+            when (character) {
+                in letters -> {
+                    factor += 2f
+                }
+                in uppercaseLetters -> {
+                    factor += 2f
+                }
+                in numbers -> {
+                    factor += 1f
+                }
+                in special -> {
+                    factor += 5f
+                }
+            }
+        }
 
-        return (factor*length)/(maxPasswordFactor*maxPasswordLength)
+        val score =  factor / (length * 5f)
+
+        // Return the score
+        return score.coerceIn(0.0f .. 1.0f)
     }
-
 }

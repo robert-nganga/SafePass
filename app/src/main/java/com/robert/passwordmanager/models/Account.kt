@@ -12,7 +12,8 @@ data class Account(
     @ColumnInfo(name ="category")val category: String,
     @ColumnInfo(name ="date")val date: String,
     @ColumnInfo(name ="user_name") val userName: String,
-    @ColumnInfo(name ="website_name") val websiteName: String
+    @ColumnInfo(name ="website_name") val websiteName: String,
+    @ColumnInfo(name = "password_strength") val passwordStrength: Float
 ){
 
 }

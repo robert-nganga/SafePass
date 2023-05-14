@@ -79,18 +79,20 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
                 binding.passwordContainer.helperText = when (strength) {
                     in 0.0 .. 0.5 -> {
                         tvHelper.setTextColor(Color.RED)
-                        "Weak"
+                        "Weak password"
                     }
                     in 0.5 .. 0.7 -> {
                         tvHelper.setTextColor(Color.YELLOW)
-                        "Strong"
+                        "Strong password"
                     }
                     in 0.7 .. 1.0 -> {
                         tvHelper.setTextColor(Color.GREEN)
-                        "Very strong"
+                        "Very strong password"
                     }
                     else -> {""}
                 }
+            }else{
+                binding.passwordContainer.helperText = "Must contain more than 8 characters"
             }
         }
     }
