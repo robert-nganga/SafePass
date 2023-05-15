@@ -16,15 +16,7 @@ class PasswordManager {
         val logger = Logger.getLogger(PasswordManager::class.java.name)
     }
 
-    /**
-     * Generate a random password
-     * @param isWithLetters Boolean value to specify if the password must contain letters
-     * @param isWithUppercase Boolean value to specify if the password must contain uppercase letters
-     * @param isWithNumbers Boolean value to specify if the password must contain numbers
-     * @param isWithSpecial Boolean value to specify if the password must contain special chars
-     * @param length Int value with the length of the password
-     * @return the new password.
-     */
+
     fun generatePassword(
         isWithLetters: Boolean,
         isWithUppercase: Boolean,
@@ -52,12 +44,6 @@ class PasswordManager {
         return result.substring(0, length.coerceAtMost(result.length))
     }
 
-
-    /**
-     * Evaluate a random password
-     * @param passwordToTest String with the password to test
-     * @return a number from 0 to 1, 0 is a very bad password and 1 is a perfect password
-     */
     fun evaluatePassword(passwordToTest: String) : Float {
 
         var factor = 0
