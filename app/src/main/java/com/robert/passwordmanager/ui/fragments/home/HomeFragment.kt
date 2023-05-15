@@ -39,11 +39,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         passwordViewModel = (activity as MainActivity).passwordViewModel
 
         val categories = resources.getStringArray(R.array.categories)
-        binding.image.setForegroundSweepAngle(180f)
         setupRecyclerView()
 
         passwordViewModel.averagePasswordStrength.observe(viewLifecycleOwner){averageStrength->
-
+            binding.image.setHealthScore(averageStrength)
         }
 
 

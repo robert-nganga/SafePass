@@ -88,6 +88,7 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
                     else -> {""}
                 }
             }else{
+                tvHelper.setTextColor(Color.RED)
                 binding.passwordContainer.helperText = "Must contain more than 8 characters"
             }
         }
