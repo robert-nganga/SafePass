@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import com.robert.passwordmanager.models.Account
 
 @Database(entities = [Account::class], version = 1, exportSchema = false)
-abstract class PasswordRoomDatabase: RoomDatabase() {
+abstract class AccountRoomDatabase: RoomDatabase() {
 
-    abstract fun passwordDao(): PasswordDao
+    abstract fun accountDao(): AccountDao
 }

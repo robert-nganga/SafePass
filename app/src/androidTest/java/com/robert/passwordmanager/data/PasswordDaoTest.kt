@@ -7,8 +7,8 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.google.common.truth.Truth.assertThat
-import com.robert.passwordmanager.data.local.PasswordDao
-import com.robert.passwordmanager.data.local.PasswordRoomDatabase
+import com.robert.passwordmanager.data.local.AccountDao
+import com.robert.passwordmanager.data.local.AccountRoomDatabase
 import com.robert.passwordmanager.getOrAwaitValue
 import com.robert.passwordmanager.models.Account
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,21 +27,28 @@ class PasswordDaoTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var passwordRoomDatabase: PasswordRoomDatabase
+    private lateinit var passwordRoomDatabase: AccountRoomDatabase
     private lateinit var passwordDetails: Account
-    private lateinit var passwordDao: PasswordDao
+    private lateinit var passwordDao: AccountDao
 
     @Before
     fun setup() {
         passwordRoomDatabase = Room.inMemoryDatabaseBuilder(
             ApplicationProvider.getApplicationContext(),
-            PasswordRoomDatabase::class.java
+            AccountRoomDatabase::class.java
         ).allowMainThreadQueries().build()
 
-        passwordDao = passwordRoomDatabase.passwordDao()
+        passwordDao = passwordRoomDatabase.accountDao()
 
-        passwordDetails = Account("password", "website",
-            "01 020, 2022 04:45", "job@gmail.com", "Google")
+        passwordDetails = Account(
+            id = 2,
+            websiteName = "Google",
+            userName = "musambi@gmail.com",
+            category = "Website",
+            password = "Hfah654#4@",
+            passwordStrength = 0.7,
+            date = "24 may 2023"
+        )
     }
 
     @After

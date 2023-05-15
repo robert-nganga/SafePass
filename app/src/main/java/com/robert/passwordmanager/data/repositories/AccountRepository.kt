@@ -3,7 +3,9 @@ package com.robert.passwordmanager.data.repositories
 import com.robert.passwordmanager.models.Account
 import kotlinx.coroutines.flow.Flow
 
-interface PasswordRepository {
+interface AccountRepository {
+
+    fun observeAllAccounts(): Flow<List<Account>>
 
     fun searchPasswords(query: String): Flow<List<Account>>
 

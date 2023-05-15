@@ -1,15 +1,15 @@
 package com.robert.passwordmanager.data.repositories
 
+import com.robert.passwordmanager.data.local.AccountDao
 import com.robert.passwordmanager.models.Account
-import com.robert.passwordmanager.data.local.PasswordRoomDatabase
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class PasswordRepositoryImpl@Inject constructor(database: PasswordRoomDatabase): PasswordRepository{
+class AccountRepositoryImpl@Inject constructor(private val accountDao: AccountDao): AccountRepository{
 
-    private val accountDao = database.passwordDao()
 
-    val allAccounts: Flow<List<Account>> = accountDao.getAllPasswords()
+
+    override fun observeAllAccounts(): Flow<List<Account>> = accountDao.getAllPasswords()
 
     override fun searchPasswords(query: String): Flow<List<Account>> = accountDao.searchPasswordByName(query)
 

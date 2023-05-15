@@ -5,7 +5,7 @@ import com.robert.passwordmanager.models.Account
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface PasswordDao {
+interface AccountDao {
 
     @Query("SELECT * FROM password_table ORDER BY id DESC")
     fun getAllPasswords(): Flow<List<Account>>

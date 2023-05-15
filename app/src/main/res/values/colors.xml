@@ -16,6 +16,7 @@
     <color name="transparent">#00000000</color>
     <color name="light_grey">#f2f2f2</color>
     <color name="red_100">#34ffe6e6</color>
+    <color name="green_100">#34c6ecc6</color>
     <color name="red_700">#ff0000</color>
     <color name="blue_100">#FFDDEBF8</color>
     <color name="blue_150">#D7DADD</color>

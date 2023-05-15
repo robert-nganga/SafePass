@@ -2,9 +2,10 @@ package com.robert.passwordmanager.ui
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.*
+import com.robert.passwordmanager.data.repositories.AccountRepository
 import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.models.AccountListItem
-import com.robert.passwordmanager.data.repositories.PasswordRepositoryImpl
+import com.robert.passwordmanager.data.repositories.AccountRepositoryImpl
 import com.robert.passwordmanager.utils.OrderBy
 import com.robert.passwordmanager.utils.PasswordManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class PasswordViewModel @Inject constructor(
     private val passwordManager: PasswordManager,
-    private val repository: PasswordRepositoryImpl): ViewModel() {
+    private val repository: AccountRepository
+): ViewModel() {
 
     private var _id = MutableLiveData<Int>()
 
@@ -25,10 +27,18 @@ class PasswordViewModel @Inject constructor(
         repository.getAccountById(id).asLiveData()
     }
 
-    val allAccounts: LiveData<List<Account>> = repository.allAccounts.asLiveData()
+    val allAccounts: LiveData<List<Account>> = repository.observeAllAccounts().asLiveData()
 
     val averagePasswordStrength = allAccounts.map { accounts->
         getAverage(accounts)
+    }
+
+    val totalPasswords = allAccounts.map { accounts->
+        accounts.size
+    }
+
+    val weakPasswords = allAccounts.map { accounts->
+        accounts.filter { it.passwordStrength < 0.6 }.size
     }
 
     private var _orderBy = MutableLiveData<OrderBy>(OrderBy.Category)

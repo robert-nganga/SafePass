@@ -45,6 +45,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             binding.image.setHealthScore(averageStrength)
         }
 
+        passwordViewModel.totalPasswords.observe(viewLifecycleOwner){total->
+            binding.totalText.text = total.toString()
+        }
+
+        passwordViewModel.weakPasswords.observe(viewLifecycleOwner){weak->
+            binding.weakText.text = weak.toString()
+        }
 
         passwordViewModel.allAccounts.observe(viewLifecycleOwner) { list ->
             list.let {

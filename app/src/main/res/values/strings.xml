@@ -26,6 +26,8 @@
     <string name="hint_password">Password</string>
     <string name="required">Required</string>
     <string name="password_helper_text">Must contain more than 8 characters</string>
+    <string name="total">Total</string>
+    <string name="weak">Weak</string>
     <string-array name="categories">
         <item>Cloud</item>
         <item>Application</item>
