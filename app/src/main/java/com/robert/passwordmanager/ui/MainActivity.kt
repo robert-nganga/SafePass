@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    val passwordViewModel: PasswordViewModel by viewModels()
+    val accountViewModel: AccountViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

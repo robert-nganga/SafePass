@@ -16,7 +16,7 @@ import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
-class PasswordViewModel @Inject constructor(
+class AccountViewModel @Inject constructor(
     private val passwordManager: PasswordManager,
     private val repository: AccountRepository
 ): ViewModel() {

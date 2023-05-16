@@ -6,7 +6,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.robert.passwordmanager.ui.PasswordViewModel
+import com.robert.passwordmanager.ui.AccountViewModel
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.adapters.AccountsAdapter
 import com.robert.passwordmanager.databinding.FragmentSearchBinding
@@ -16,7 +16,7 @@ import com.robert.passwordmanager.ui.MainActivity
 class SearchFragment : Fragment() {
 
     private lateinit var txtSearch: SearchView
-    private lateinit var passwordViewModel: PasswordViewModel
+    private lateinit var accountViewModel: AccountViewModel
     private lateinit var searchAdapter: AccountsAdapter
 
     private var _binding: FragmentSearchBinding? = null
@@ -33,7 +33,7 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        passwordViewModel = (activity as MainActivity).passwordViewModel
+        accountViewModel = (activity as MainActivity).accountViewModel
 
         txtSearch = view.findViewById(R.id.searchView)
         txtSearch.clearFocus()
@@ -47,14 +47,14 @@ class SearchFragment : Fragment() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 newText?.let {
-                    passwordViewModel.setSearchQuery(it)
+                    accountViewModel.setSearchQuery(it)
                 }
                 //searchPasswords(newText, recentsAdapter)
                 return true
             }
         })
 
-        passwordViewModel.searchResults.observe(viewLifecycleOwner){results->
+        accountViewModel.searchResults.observe(viewLifecycleOwner){ results->
             searchAdapter.submitList(results)
         }
     }
@@ -71,7 +71,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun deletePassword(passwordDetails: Account) {
-        passwordViewModel.deleteAccount(passwordDetails)
+        accountViewModel.deleteAccount(passwordDetails)
     }
 
     override fun onDestroyView() {

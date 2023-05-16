@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
-import com.robert.passwordmanager.ui.PasswordViewModel
+import com.robert.passwordmanager.ui.AccountViewModel
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.adapters.AccountItemsAdapter
 import com.robert.passwordmanager.models.Account
@@ -26,7 +26,7 @@ import com.robert.passwordmanager.utils.OrderBy
 class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
     private lateinit var categories: Array<String>
-    private lateinit var passwordViewModel: PasswordViewModel
+    private lateinit var accountViewModel: AccountViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var accountItemsAdapter: AccountItemsAdapter
     private lateinit var toolbar: MaterialToolbar
@@ -39,7 +39,7 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_vault, container, false)
         categories = resources.getStringArray(R.array.categories)
-        passwordViewModel = (activity as MainActivity).passwordViewModel
+        accountViewModel = (activity as MainActivity).accountViewModel
         toolbar = view.findViewById(R.id.topAppBar)
         orderByItem = view.findViewById(R.id.action_orderBy)
         setupMenuClickListener()
@@ -58,7 +58,7 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
             copyPasswordToClipboard(it)
         }
 
-        passwordViewModel.allAccountItems.observe(viewLifecycleOwner){
+        accountViewModel.allAccountItems.observe(viewLifecycleOwner){
             accountItemsAdapter.submitList(it)
         }
         return view
@@ -90,11 +90,11 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
             val accountListItem = accountItemsAdapter.currentList[viewHolder.adapterPosition]
             when(accountListItem){
                 is AccountListItem.AccountItem ->{
-                    passwordViewModel.deleteAccount(accountListItem.account)
+                    accountViewModel.deleteAccount(accountListItem.account)
                     Snackbar.make(requireView(), "Deleted", Snackbar.LENGTH_LONG)
                         .setAnchorView((activity as MainActivity).findViewById(R.id.bottomAppBar))
                         .setAction("Undo"){
-                            passwordViewModel.insertAccount(accountListItem.account)
+                            accountViewModel.insertAccount(accountListItem.account)
                         }
                         .show()
                 }
@@ -108,7 +108,7 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         toolbar.setOnMenuItemClickListener { menu->
             when(menu.itemId){
                 R.id.action_deleteAll -> {
-                    passwordViewModel.deleteAll()
+                    accountViewModel.deleteAll()
                     true
                 }
                 R.id.action_orderBy -> {
@@ -138,17 +138,17 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     }
 
     private fun deletePassword(passwordDetails: Account) {
-        passwordViewModel.deleteAccount(passwordDetails)
+        accountViewModel.deleteAccount(passwordDetails)
     }
 
     override fun onMenuItemClick(menu: MenuItem?): Boolean {
         return when (menu?.itemId){
             R.id.action_orderByDate ->{
-                passwordViewModel.setOrderBY(OrderBy.Date)
+                accountViewModel.setOrderBY(OrderBy.Date)
                 true
             }
             R.id.action_orderByCategory ->{
-                passwordViewModel.setOrderBY(OrderBy.Category)
+                accountViewModel.setOrderBY(OrderBy.Category)
                 true
             }
             else -> false

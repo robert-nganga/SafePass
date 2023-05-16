@@ -16,7 +16,7 @@ import com.robert.passwordmanager.R
 import com.robert.passwordmanager.databinding.FragmentAddAccountBinding
 import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.ui.MainActivity
-import com.robert.passwordmanager.ui.PasswordViewModel
+import com.robert.passwordmanager.ui.AccountViewModel
 
 
 class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
@@ -24,7 +24,7 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
     private var _binding: FragmentAddAccountBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var passwordViewModel: PasswordViewModel
+    private lateinit var accountViewModel: AccountViewModel
     private val args: AddAccountFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -38,16 +38,16 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        passwordViewModel = (activity as MainActivity).passwordViewModel
+        accountViewModel = (activity as MainActivity).accountViewModel
         val isNewAccount = (args.id == -1)
 
         if (!isNewAccount){
             binding.toolBar.title = resources.getString(R.string.update_page_title)
             binding.extendedFab.text = resources.getString(R.string.extended_fab_update_label)
-            passwordViewModel.setId(args.id)
+            accountViewModel.setId(args.id)
 
             //Observe account
-            passwordViewModel.account.observe(viewLifecycleOwner){ account->
+            accountViewModel.account.observe(viewLifecycleOwner){ account->
                 initializeAccountDetails(account)
             }
         }
@@ -67,8 +67,8 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
 
     private fun passwordTextChangeListener() {
         binding.passwordText.addTextChangedListener{editable->
-            val strength = passwordViewModel.evaluatePassword(editable.toString())
-            val strengthLabel = passwordViewModel.getPasswordStrengthLabel(strength)
+            val strength = accountViewModel.evaluatePassword(editable.toString())
+            val strengthLabel = accountViewModel.getPasswordStrengthLabel(strength)
             val helperView = binding.passwordContainer.findViewById<View>(com.google.android.material.R.id.textinput_helper_text)
             val tvHelper = helperView as TextView
 
@@ -146,7 +146,7 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
 
     private fun getAccount(): Account {
         val selectedCategory: String = (binding.categoryContainer.editText as AutoCompleteTextView).text.toString()
-        return passwordViewModel.createAccount(
+        return accountViewModel.createAccount(
             name = binding.nameText.text.toString(),
             username = binding.userNameText.text.toString(),
             category = selectedCategory,
@@ -163,9 +163,9 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
         if (passwordValid && nameValid && userNameValid && categoryValid) {
             val account = getAccount()
             if (args.id == -1){
-                passwordViewModel.insertAccount(account)
+                accountViewModel.insertAccount(account)
             }else{
-                passwordViewModel.updateAccount(account.copy(id = args.id))
+                accountViewModel.updateAccount(account.copy(id = args.id))
             }
             findNavController().popBackStack()
         }

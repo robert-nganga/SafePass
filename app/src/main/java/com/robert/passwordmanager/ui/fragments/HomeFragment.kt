@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.robert.passwordmanager.ui.PasswordViewModel
+import com.robert.passwordmanager.ui.AccountViewModel
 import com.robert.passwordmanager.adapters.AccountsAdapter
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.databinding.FragmentHomeBinding
@@ -17,7 +17,7 @@ import com.robert.passwordmanager.ui.MainActivity
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    private lateinit var passwordViewModel: PasswordViewModel
+    private lateinit var accountViewModel: AccountViewModel
     private lateinit var accountsAdapter: AccountsAdapter
 
     private var _binding: FragmentHomeBinding? = null
@@ -33,16 +33,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        passwordViewModel = (activity as MainActivity).passwordViewModel
+        accountViewModel = (activity as MainActivity).accountViewModel
 
         val categories = resources.getStringArray(R.array.categories)
         setupRecyclerView()
 
-        passwordViewModel.averagePasswordStrength.observe(viewLifecycleOwner){averageStrength->
+        accountViewModel.averagePasswordStrength.observe(viewLifecycleOwner){ averageStrength->
             binding.image.setHealthScore(averageStrength)
         }
 
-        passwordViewModel.report.observe(viewLifecycleOwner){report->
+        accountViewModel.report.observe(viewLifecycleOwner){ report->
             binding.totalText.text = report.total.toString()
             binding.weakText.text = report.weak.toString()
             binding.reusedText.text  = report.reused.toString()
@@ -50,10 +50,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
 
 
-        passwordViewModel.allAccounts.observe(viewLifecycleOwner) { list ->
+        accountViewModel.allAccounts.observe(viewLifecycleOwner) { list ->
             list.let {
                 accountsAdapter.submitList(it)
-                //updateTextViews(passwordViewModel.getSizeOfEachCategory(categories, it))
+                //updateTextViews(accountViewModel.getSizeOfEachCategory(categories, it))
             }
         }
     }
@@ -69,6 +69,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun deletePassword(passwordDetails: Account) {
-        passwordViewModel.deleteAccount(passwordDetails)
+        accountViewModel.deleteAccount(passwordDetails)
     }
 }

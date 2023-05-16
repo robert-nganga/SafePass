@@ -6,41 +6,50 @@ import androidx.lifecycle.map
 import com.robert.passwordmanager.models.Account
 import kotlinx.coroutines.flow.Flow
 
-class FakeAccountRepository(private val list: List<Account>): AccountRepository {
+class FakeAccountRepository(private val accounts: MutableList<Account>): AccountRepository {
 
-    private var accounts = MutableLiveData<List<Account>>()
+    private var observableAccounts = MutableLiveData<List<Account>>()
 
     init {
-        accounts.value = list
+        observableAccounts.value = accounts
+    }
+
+    private fun refreshLiveData(){
+        observableAccounts.postValue(accounts)
     }
 
     override fun observeAllAccounts(): Flow<List<Account>> {
-        return accounts.asFlow()
+        return observableAccounts.asFlow()
     }
 
     override fun searchPasswords(query: String): Flow<List<Account>> {
-        return accounts.map { accounts-> accounts.filter { it.websiteName == query } }.asFlow()
+        return observableAccounts.map { accounts-> accounts.filter { it.websiteName == query } }.asFlow()
     }
 
     override fun getAccountById(id: Int): Flow<Account> {
-        return accounts.map { accounts->
+        return observableAccounts.map { accounts->
             accounts.first { it.id == id }
         }.asFlow()
     }
 
     override suspend fun insert(account: Account) {
-        TODO("Not yet implemented")
+        accounts.add(account)
+        refreshLiveData()
     }
 
     override suspend fun update(account: Account) {
-        TODO("Not yet implemented")
+        accounts.removeIf { it.id == account.id }
+        accounts.add(account)
+        refreshLiveData()
     }
 
     override suspend fun delete(account: Account) {
-        TODO("Not yet implemented")
+        accounts.remove(account)
+        refreshLiveData()
     }
 
     override suspend fun deleteAll() {
-
+        accounts.clear()
+        refreshLiveData()
     }
 }

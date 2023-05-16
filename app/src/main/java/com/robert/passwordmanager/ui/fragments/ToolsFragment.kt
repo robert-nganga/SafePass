@@ -13,10 +13,9 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import com.google.android.material.slider.Slider
 import com.google.android.material.switchmaterial.SwitchMaterial
-import com.robert.passwordmanager.ui.PasswordViewModel
+import com.robert.passwordmanager.ui.AccountViewModel
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.ui.MainActivity
 import kotlin.math.roundToInt
@@ -33,7 +32,7 @@ class ToolsFragment : Fragment() {
     private var isSymbols: Boolean = true
     private var length: Int = 8
 
-    private lateinit var passwordViewModel: PasswordViewModel
+    private lateinit var accountViewModel: AccountViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +40,7 @@ class ToolsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_tools, container, false)
-        passwordViewModel = (activity as MainActivity).passwordViewModel
+        accountViewModel = (activity as MainActivity).accountViewModel
 
         txtLength = view.findViewById(R.id.txtLength)
         txtPassword = view.findViewById(R.id.txtGeneratedPassword)
@@ -77,11 +76,11 @@ class ToolsFragment : Fragment() {
             if(!isNumbers && !isLetters && !isSymbols){
                 Toast.makeText(view.context, "Check at least one item", Toast.LENGTH_SHORT).show()
             }else{
-                passwordViewModel.generatePassword(isLetters, isNumbers , isSymbols, length)
+                accountViewModel.generatePassword(isLetters, isNumbers , isSymbols, length)
             }
         }
 
-        passwordViewModel.generatedPassword.observe(viewLifecycleOwner){ password->
+        accountViewModel.generatedPassword.observe(viewLifecycleOwner){ password->
             txtPassword.text = password
         }
         return view
