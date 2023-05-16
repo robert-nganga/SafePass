@@ -6,17 +6,13 @@ import androidx.lifecycle.map
 import com.robert.passwordmanager.models.Account
 import kotlinx.coroutines.flow.Flow
 
-class FakeAccountRepository(private val accounts: MutableList<Account>): AccountRepository {
+class FakeAccountRepository(val accounts: MutableList<Account>): AccountRepository {
 
-    private var observableAccounts = MutableLiveData<List<Account>>()
+    private var observableAccounts = MutableLiveData<List<Account>>(accounts)
 
-    init {
-        observableAccounts.value = accounts
-    }
 
-    private fun refreshLiveData(){
-        observableAccounts.postValue(accounts)
-    }
+
+
 
     override fun observeAllAccounts(): Flow<List<Account>> {
         return observableAccounts.asFlow()
@@ -34,22 +30,22 @@ class FakeAccountRepository(private val accounts: MutableList<Account>): Account
 
     override suspend fun insert(account: Account) {
         accounts.add(account)
-        refreshLiveData()
+        observableAccounts.postValue(accounts)
     }
 
     override suspend fun update(account: Account) {
         accounts.removeIf { it.id == account.id }
         accounts.add(account)
-        refreshLiveData()
+        observableAccounts.postValue(accounts)
     }
 
     override suspend fun delete(account: Account) {
         accounts.remove(account)
-        refreshLiveData()
+        observableAccounts.postValue(accounts)
     }
 
     override suspend fun deleteAll() {
         accounts.clear()
-        refreshLiveData()
+        observableAccounts.postValue(accounts)
     }
 }
