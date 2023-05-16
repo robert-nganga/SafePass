@@ -1,4 +1,4 @@
-package com.robert.passwordmanager.ui.fragments.tools
+package com.robert.passwordmanager.ui.fragments
 
 import android.content.ClipData
 import android.content.ClipboardManager

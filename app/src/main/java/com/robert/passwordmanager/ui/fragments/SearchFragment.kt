@@ -1,4 +1,4 @@
-package com.robert.passwordmanager.ui.fragments.search
+package com.robert.passwordmanager.ui.fragments
 
 import android.os.Bundle
 import android.view.*

@@ -15,7 +15,7 @@ import com.robert.passwordmanager.utils.Contants.ITEM_VIEW_TYPE_HEADER
 import com.robert.passwordmanager.utils.Contants.ITEM_VIEW_TYPE_ITEM
 import java.lang.ClassCastException
 
-class AllPasswordsAdapter(): ListAdapter<AccountListItem, RecyclerView.ViewHolder>(diffUtil) {
+class AccountItemsAdapter(): ListAdapter<AccountListItem, RecyclerView.ViewHolder>(diffUtil) {
 
     private var btnCopyClickListener: ((String)->Unit)? = null
 

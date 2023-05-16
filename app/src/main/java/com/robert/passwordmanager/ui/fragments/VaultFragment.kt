@@ -1,4 +1,4 @@
-package com.robert.passwordmanager.ui.fragments.list
+package com.robert.passwordmanager.ui.fragments
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -16,7 +16,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
 import com.robert.passwordmanager.ui.PasswordViewModel
 import com.robert.passwordmanager.R
-import com.robert.passwordmanager.adapters.AllPasswordsAdapter
+import com.robert.passwordmanager.adapters.AccountItemsAdapter
 import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.models.AccountListItem
 import com.robert.passwordmanager.ui.MainActivity
@@ -28,7 +28,7 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     private lateinit var categories: Array<String>
     private lateinit var passwordViewModel: PasswordViewModel
     private lateinit var recyclerView: RecyclerView
-    private lateinit var allAccountsAdapter: AllPasswordsAdapter
+    private lateinit var accountItemsAdapter: AccountItemsAdapter
     private lateinit var toolbar: MaterialToolbar
     private lateinit var orderByItem: View
 
@@ -46,7 +46,7 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         recyclerView = view.findViewById(R.id.mainRecyclerView)
         setupRecyclerView()
 
-        allAccountsAdapter.itemClickListener {
+        accountItemsAdapter.itemClickListener {
             val bundle = Bundle().apply {
                 putInt("id", it.id)
             }
@@ -54,21 +54,21 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         }
 
 
-        allAccountsAdapter.setCopyClickListener {
+        accountItemsAdapter.setCopyClickListener {
             copyPasswordToClipboard(it)
         }
 
         passwordViewModel.allAccountItems.observe(viewLifecycleOwner){
-            allAccountsAdapter.submitList(it)
+            accountItemsAdapter.submitList(it)
         }
         return view
     }
 
     private fun setupRecyclerView() {
-        allAccountsAdapter = AllPasswordsAdapter()
+        accountItemsAdapter = AccountItemsAdapter()
 
         recyclerView.apply {
-            adapter = allAccountsAdapter
+            adapter = accountItemsAdapter
             itemTouchHelper.attachToRecyclerView(this)
             itemAnimator = null
         }
@@ -87,7 +87,7 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            val accountListItem = allAccountsAdapter.currentList[viewHolder.adapterPosition]
+            val accountListItem = accountItemsAdapter.currentList[viewHolder.adapterPosition]
             when(accountListItem){
                 is AccountListItem.AccountItem ->{
                     passwordViewModel.deleteAccount(accountListItem.account)

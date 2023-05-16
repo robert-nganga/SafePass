@@ -1,12 +1,10 @@
-package com.robert.passwordmanager.ui.fragments.home
+package com.robert.passwordmanager.ui.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.ui.PasswordViewModel
@@ -15,7 +13,6 @@ import com.robert.passwordmanager.R
 import com.robert.passwordmanager.databinding.FragmentHomeBinding
 import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.ui.MainActivity
-import com.robert.passwordmanager.ui.health_indicator.CustomHealthIndicator
 
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
