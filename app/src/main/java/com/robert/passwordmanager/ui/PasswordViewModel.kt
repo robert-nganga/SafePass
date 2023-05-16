@@ -1,6 +1,7 @@
 package com.robert.passwordmanager.ui
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import androidx.lifecycle.*
 import com.robert.passwordmanager.data.repositories.AccountRepository
 import com.robert.passwordmanager.models.Account
@@ -84,6 +85,21 @@ class PasswordViewModel @Inject constructor(
         repository.deleteAll()
     }
 
+    fun getPasswordStrengthLabel(strength: Float): String{
+        return  when (strength) {
+            in 0.0 .. 0.55 -> {
+                "Weak password"
+            }
+            in 0.55 .. 0.75 -> {
+                "Strong password"
+            }
+            in 0.75 .. 1.0 -> {
+                "Very strong password"
+            }
+            else -> {""}
+        }
+    }
+
     fun generatePassword(isWithLetters: Boolean,
                          isWithNumbers: Boolean,
                          isWithSpecial: Boolean,
@@ -102,7 +118,8 @@ class PasswordViewModel @Inject constructor(
             category = category,
             password = password,
             date = currentDate,
-            passwordStrength = evaluatePassword(password).toDouble()
+            passwordStrength = evaluatePassword(password).toDouble(),
+            passwordStrengthLabel = getPasswordStrengthLabel(evaluatePassword(password))
         )
     }
 
@@ -115,8 +132,8 @@ class PasswordViewModel @Inject constructor(
         val reused = accounts.groupBy { it.password }.values.maxByOrNull { list-> list.size }
         return Report(
             total = accounts.size,
-            strong = accounts.filter { it.passwordStrength > 0.8 }.size,
-            weak = accounts.filter { it.passwordStrength < 0.6 }.size,
+            strong = accounts.filter { it.passwordStrengthLabel == "Strong password" }.size,
+            weak = accounts.filter { it.passwordStrengthLabel == "Weak password" }.size,
             reused = if(reused == null || reused.size == 1) 0 else reused.size
         )
     }

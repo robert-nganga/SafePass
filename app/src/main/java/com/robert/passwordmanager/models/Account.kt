@@ -13,7 +13,8 @@ data class Account(
     @ColumnInfo(name ="date")val date: String,
     @ColumnInfo(name ="user_name") val userName: String,
     @ColumnInfo(name ="website_name") val websiteName: String,
-    @ColumnInfo(name = "password_strength") val passwordStrength: Double
+    @ColumnInfo(name = "password_strength") val passwordStrength: Double,
+    @ColumnInfo(name = "password_strength_label") val passwordStrengthLabel: String
 ){
 
 }

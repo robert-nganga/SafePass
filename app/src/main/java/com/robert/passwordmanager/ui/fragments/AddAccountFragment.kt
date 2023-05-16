@@ -68,22 +68,23 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
     private fun passwordTextChangeListener() {
         binding.passwordText.addTextChangedListener{editable->
             val strength = passwordViewModel.evaluatePassword(editable.toString())
+            val strengthLabel = passwordViewModel.getPasswordStrengthLabel(strength)
             val helperView = binding.passwordContainer.findViewById<View>(com.google.android.material.R.id.textinput_helper_text)
             val tvHelper = helperView as TextView
 
             if (editable.toString().length > 8){
-                binding.passwordContainer.helperText = when (strength) {
-                    in 0.0 .. 0.5 -> {
+                binding.passwordContainer.helperText = when (strengthLabel) {
+                    "Weak password"-> {
                         tvHelper.setTextColor(Color.RED)
-                        "Weak password"
+                        strengthLabel
                     }
-                    in 0.5 .. 0.7 -> {
+                    "Strong password" -> {
                         tvHelper.setTextColor(Color.YELLOW)
-                        "Strong password"
+                        strengthLabel
                     }
-                    in 0.7 .. 1.0 -> {
+                    "Very strong password" -> {
                         tvHelper.setTextColor(Color.GREEN)
-                        "Very strong password"
+                        strengthLabel
                     }
                     else -> {""}
                 }
