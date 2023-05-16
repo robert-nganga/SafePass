@@ -8,6 +8,7 @@ import com.robert.passwordmanager.models.AccountListItem
 import com.robert.passwordmanager.data.repositories.AccountRepositoryImpl
 import com.robert.passwordmanager.utils.OrderBy
 import com.robert.passwordmanager.utils.PasswordManager
+import com.robert.passwordmanager.utils.Report
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -33,12 +34,8 @@ class PasswordViewModel @Inject constructor(
         getAverage(accounts)
     }
 
-    val totalPasswords = allAccounts.map { accounts->
-        accounts.size
-    }
-
-    val weakPasswords = allAccounts.map { accounts->
-        accounts.filter { it.passwordStrength < 0.6 }.size
+    val report = allAccounts.map { accounts->
+        getReport(accounts)
     }
 
     private var _orderBy = MutableLiveData<OrderBy>(OrderBy.Category)
@@ -58,28 +55,6 @@ class PasswordViewModel @Inject constructor(
     val  generatedPassword: LiveData<String>
         get() = _generatedPassword
 
-
-    fun generatePassword(isWithLetters: Boolean,
-                         isWithNumbers: Boolean,
-                         isWithSpecial: Boolean,
-                         length: Int){
-        _generatedPassword.value = passwordManager.generatePassword(isWithLetters,
-             isWithLetters, isWithNumbers, isWithSpecial, length)
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    fun createAccount(name: String, username: String, category: String, password: String): Account {
-        val sdf = SimpleDateFormat("dd MMM, yyy")
-        val currentDate: String = sdf.format(Date())
-        return Account(
-            websiteName = name,
-            userName = username,
-            category = category,
-            password = password,
-            date = currentDate,
-            passwordStrength = evaluatePassword(password).toDouble()
-        )
-    }
 
     fun setOrderBY(newOrder: OrderBy){
         _orderBy.value = newOrder
@@ -109,9 +84,41 @@ class PasswordViewModel @Inject constructor(
         repository.deleteAll()
     }
 
+    fun generatePassword(isWithLetters: Boolean,
+                         isWithNumbers: Boolean,
+                         isWithSpecial: Boolean,
+                         length: Int){
+        _generatedPassword.value = passwordManager.generatePassword(isWithLetters,
+            isWithLetters, isWithNumbers, isWithSpecial, length)
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun createAccount(name: String, username: String, category: String, password: String): Account {
+        val sdf = SimpleDateFormat("dd MMM, yyy")
+        val currentDate: String = sdf.format(Date())
+        return Account(
+            websiteName = name,
+            userName = username,
+            category = category,
+            password = password,
+            date = currentDate,
+            passwordStrength = evaluatePassword(password).toDouble()
+        )
+    }
+
     private fun getAverage(accounts: List<Account>): Float {
         val strengthSum = accounts.sumOf { it.passwordStrength }
         return (strengthSum / accounts.size).toFloat()
+    }
+
+    private fun getReport(accounts: List<Account>): Report {
+        val reused = accounts.groupBy { it.password }.values.maxByOrNull { list-> list.size }
+        return Report(
+            total = accounts.size,
+            strong = accounts.filter { it.passwordStrength > 0.8 }.size,
+            weak = accounts.filter { it.passwordStrength < 0.6 }.size,
+            reused = if(reused == null || reused.size == 1) 0 else reused.size
+        )
     }
 
     private fun getAccountListItems(items: List<Account>, orderBy: OrderBy): List<AccountListItem> {
