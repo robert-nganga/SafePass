@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.ui.PasswordViewModel
-import com.robert.passwordmanager.adapters.PasswordsAdapter
+import com.robert.passwordmanager.adapters.AccountsAdapter
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.databinding.FragmentHomeBinding
 import com.robert.passwordmanager.models.Account
@@ -18,7 +18,7 @@ import com.robert.passwordmanager.ui.MainActivity
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private lateinit var passwordViewModel: PasswordViewModel
-    private lateinit var passwordsAdapter: PasswordsAdapter
+    private lateinit var accountsAdapter: AccountsAdapter
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -52,18 +52,18 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         passwordViewModel.allAccounts.observe(viewLifecycleOwner) { list ->
             list.let {
-                passwordsAdapter.updateList(it)
+                accountsAdapter.submitList(it)
                 //updateTextViews(passwordViewModel.getSizeOfEachCategory(categories, it))
             }
         }
     }
 
     private fun setupRecyclerView() {
-        passwordsAdapter = PasswordsAdapter(requireContext()) { deletePassword(it) }
+        accountsAdapter = AccountsAdapter()
         val myLayoutManager = LinearLayoutManager(context)
         myLayoutManager.orientation = RecyclerView.VERTICAL
         binding.recentRv.apply {
-            adapter = passwordsAdapter
+            adapter = accountsAdapter
             layoutManager = myLayoutManager
         }
     }

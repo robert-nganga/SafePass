@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.ui.PasswordViewModel
 import com.robert.passwordmanager.R
-import com.robert.passwordmanager.adapters.PasswordsAdapter
+import com.robert.passwordmanager.adapters.AccountsAdapter
 import com.robert.passwordmanager.databinding.FragmentSearchBinding
 import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.ui.MainActivity
@@ -17,7 +17,7 @@ class SearchFragment : Fragment() {
 
     private lateinit var txtSearch: SearchView
     private lateinit var passwordViewModel: PasswordViewModel
-    private lateinit var searchAdapter: PasswordsAdapter
+    private lateinit var searchAdapter: AccountsAdapter
 
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
@@ -55,12 +55,12 @@ class SearchFragment : Fragment() {
         })
 
         passwordViewModel.searchResults.observe(viewLifecycleOwner){results->
-            searchAdapter.updateList(results)
+            searchAdapter.submitList(results)
         }
     }
 
     private fun setupSearchRecyclerView() {
-        searchAdapter = PasswordsAdapter(requireContext()){deletePassword(it)}
+        searchAdapter = AccountsAdapter()
         val searchLayoutManager = LinearLayoutManager(context)
         searchLayoutManager.orientation = RecyclerView.VERTICAL
 
