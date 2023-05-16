@@ -1,12 +1,10 @@
 package com.robert.passwordmanager.ui
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import androidx.lifecycle.*
 import com.robert.passwordmanager.data.repositories.AccountRepository
 import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.models.AccountListItem
-import com.robert.passwordmanager.data.repositories.AccountRepositoryImpl
 import com.robert.passwordmanager.utils.OrderBy
 import com.robert.passwordmanager.utils.PasswordManager
 import com.robert.passwordmanager.utils.Report
@@ -24,6 +22,12 @@ class PasswordViewModel @Inject constructor(
 ): ViewModel() {
 
     private var _id = MutableLiveData<Int>()
+
+    private var _searchQuery = MutableLiveData<String>()
+
+    val searchResults =  _searchQuery.switchMap { query->
+        repository.searchPasswords(query).asLiveData()
+    }
 
     val account = _id.switchMap { id ->
         repository.getAccountById(id).asLiveData()
@@ -59,6 +63,10 @@ class PasswordViewModel @Inject constructor(
 
     fun setOrderBY(newOrder: OrderBy){
         _orderBy.value = newOrder
+    }
+
+    fun setSearchQuery(newQuery: String){
+        _searchQuery.value = newQuery
     }
 
     fun setId(newId: Int){
@@ -132,7 +140,7 @@ class PasswordViewModel @Inject constructor(
         val reused = accounts.groupBy { it.password }.values.maxByOrNull { list-> list.size }
         return Report(
             total = accounts.size,
-            strong = accounts.filter { it.passwordStrengthLabel == "Strong password" }.size,
+            strong = accounts.filter { it.passwordStrengthLabel == "Very strong password" }.size,
             weak = accounts.filter { it.passwordStrengthLabel == "Weak password" }.size,
             reused = if(reused == null || reused.size == 1) 0 else reused.size
         )
@@ -157,6 +165,8 @@ class PasswordViewModel @Inject constructor(
             when (orderBy){
                 is OrderBy.Date -> { item.account.date == it.title }
                 is OrderBy.Category -> { item.account.category == it.title }
-            } } }
+            }
+        }
+        }
     }
 }

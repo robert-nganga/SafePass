@@ -4,39 +4,41 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.ui.PasswordViewModel
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.adapters.PasswordsAdapter
+import com.robert.passwordmanager.databinding.FragmentSearchBinding
 import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.ui.MainActivity
-import kotlinx.coroutines.launch
 
 class SearchFragment : Fragment() {
 
     private lateinit var txtSearch: SearchView
     private lateinit var passwordViewModel: PasswordViewModel
+    private lateinit var searchAdapter: PasswordsAdapter
+
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_search, container, false)
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         passwordViewModel = (activity as MainActivity).passwordViewModel
 
         txtSearch = view.findViewById(R.id.searchView)
         txtSearch.clearFocus()
 
-        val recentsAdapter = PasswordsAdapter(requireContext()){deletePassword(it)}
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.searchRecyclerView)
-        recyclerView?.adapter = recentsAdapter
-
-        val layoutManager = LinearLayoutManager(context)
-        layoutManager.orientation = RecyclerView.VERTICAL
-        recyclerView?.layoutManager = layoutManager
+        setupSearchRecyclerView()
 
         txtSearch.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -44,29 +46,37 @@ class SearchFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                searchPasswords(newText, recentsAdapter)
+                newText?.let {
+                    passwordViewModel.setSearchQuery(it)
+                }
+                //searchPasswords(newText, recentsAdapter)
                 return true
             }
         })
 
-        return view
+        passwordViewModel.searchResults.observe(viewLifecycleOwner){results->
+            searchAdapter.updateList(results)
+        }
+    }
+
+    private fun setupSearchRecyclerView() {
+        searchAdapter = PasswordsAdapter(requireContext()){deletePassword(it)}
+        val searchLayoutManager = LinearLayoutManager(context)
+        searchLayoutManager.orientation = RecyclerView.VERTICAL
+
+        binding.searchRecyclerView.apply {
+            adapter = searchAdapter
+            layoutManager = searchLayoutManager
+        }
     }
 
     private fun deletePassword(passwordDetails: Account) {
         passwordViewModel.deleteAccount(passwordDetails)
     }
 
-    private fun searchPasswords(newText: String?, passwordsAdapter: PasswordsAdapter) {
-        if (newText != null) {
-            if (newText.length > 1){
-                val searchText = "$newText%"
-                viewLifecycleOwner.lifecycleScope.launch {
-                    passwordViewModel.searchPasswords(searchText).collect{
-                        passwordsAdapter.updateList(it)
-                    }
-                }
-            }
-        }
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
+
 }
