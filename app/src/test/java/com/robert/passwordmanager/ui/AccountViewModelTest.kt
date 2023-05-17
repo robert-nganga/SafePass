@@ -34,29 +34,22 @@ class AccountViewModelTest{
 
     private lateinit var viewModel: AccountViewModel
     private lateinit var fakeAccountRepository: FakeAccountRepository
-    private val testDispatcher = StandardTestDispatcher()
 
 
 
     @Before
     fun setup(){
-        val accounts = mutableListOf(
-            Account(websiteName = "Facebook", userName = "johnie@yahoo.com", category = "Application", password = "gdjAgdkd@!AS142@hsAg",
-                passwordStrength = 0.8, passwordStrengthLabel = "Very strong password", date = "12 may 2023"),
-            Account(websiteName = "Dropbox", userName = "mercy@yahoo.com", category = "Website", password = "gdj237Tads!AS142@hsAg",
-                passwordStrength = 0.8, passwordStrengthLabel = "Very strong password", date = "10 may 2023")
-        )
-
-        fakeAccountRepository = FakeAccountRepository(accounts)
+        fakeAccountRepository = FakeAccountRepository()
         val passwordManager = PasswordManager()
         viewModel = AccountViewModel(passwordManager, fakeAccountRepository)
     }
 
     @Test
-    fun `testInsertAccount`() {
+    fun testInsertAccount() {
         val account = Account(websiteName = "Stripe", userName = "david@gmail.com", category = "Payment", password = "Ps524@31t6Da",
             passwordStrength = 0.7, passwordStrengthLabel = "Strong password", date = "10 may 2023")
         viewModel.insertAccount(account)
-        assertThat(fakeAccountRepository.accounts).contains(account)
+        val result = viewModel.allAccounts.getOrAwaitValueTest()
+        assertThat(result).contains(account)
     }
 }

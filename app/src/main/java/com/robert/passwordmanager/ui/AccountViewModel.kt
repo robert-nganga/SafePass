@@ -9,7 +9,6 @@ import com.robert.passwordmanager.utils.OrderBy
 import com.robert.passwordmanager.utils.PasswordManager
 import com.robert.passwordmanager.utils.Report
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -26,14 +25,14 @@ class AccountViewModel @Inject constructor(
     private var _searchQuery = MutableLiveData<String>()
 
     val searchResults =  _searchQuery.switchMap { query->
-        repository.searchPasswords(query).asLiveData()
+        repository.searchPasswords(query)
     }
 
     val account = _id.switchMap { id ->
-        repository.getAccountById(id).asLiveData()
+        repository.getAccountById(id)
     }
 
-    val allAccounts: LiveData<List<Account>> = repository.observeAllAccounts().asLiveData()
+    val allAccounts: LiveData<List<Account>> = repository.observeAllAccounts()
 
     val averagePasswordStrength = allAccounts.map { accounts->
         getAverage(accounts)
@@ -53,8 +52,6 @@ class AccountViewModel @Inject constructor(
             value = _orderBy.value?.let { order -> getAccountListItems(accounts, order) }
         }
     }
-
-    fun searchPasswords(name: String): Flow<List<Account>> = repository.searchPasswords(name)
 
     private val _generatedPassword = MutableLiveData<String>()
     val  generatedPassword: LiveData<String>
