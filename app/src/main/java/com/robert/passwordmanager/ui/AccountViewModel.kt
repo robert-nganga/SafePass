@@ -128,12 +128,12 @@ class AccountViewModel @Inject constructor(
         )
     }
 
-    private fun getAverage(accounts: List<Account>): Float {
+    fun getAverage(accounts: List<Account>): Float {
         val strengthSum = accounts.sumOf { it.passwordStrength }
         return (strengthSum / accounts.size).toFloat()
     }
 
-    private fun getReport(accounts: List<Account>): Report {
+    fun getReport(accounts: List<Account>): Report {
         val reused = accounts.groupBy { it.password }.values.maxByOrNull { list-> list.size }
         return Report(
             total = accounts.size,
@@ -143,7 +143,7 @@ class AccountViewModel @Inject constructor(
         )
     }
 
-    private fun getAccountListItems(items: List<Account>, orderBy: OrderBy): List<AccountListItem> {
+    fun getAccountListItems(items: List<Account>, orderBy: OrderBy): List<AccountListItem> {
         if (items.isEmpty()) return emptyList()
 
         val accountHeaders = items
