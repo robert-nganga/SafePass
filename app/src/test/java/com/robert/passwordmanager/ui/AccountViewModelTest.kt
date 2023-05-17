@@ -99,5 +99,13 @@ class AccountViewModelTest{
         assertThat(items.size).isEqualTo(4)
     }
 
+    @Test
+    fun testInsert(){
+        val acc = Account(websiteName = "Stripe", id = 2, userName = "david@gmail.com", category = "Payment", password = "Ps524@31t6Da",
+            passwordStrength = 0.7, passwordStrengthLabel = "Strong password", date = "10 may 2023")
 
+        viewModel.insertAccount(acc)
+        val result = viewModel.allAccounts.getOrAwaitValueTest()
+        assertThat(result).contains(acc)
+    }
 }
