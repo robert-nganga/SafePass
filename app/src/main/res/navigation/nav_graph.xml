@@ -9,12 +9,20 @@
         android:id="@+id/homeFragment"
         android:name="com.robert.passwordmanager.ui.fragments.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_addAccountFragment"
+            app:destination="@id/addAccountFragment" />
+    </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.robert.passwordmanager.ui.fragments.SearchFragment"
         android:label="Search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_addAccountFragment"
+            app:destination="@id/addAccountFragment" />
+    </fragment>
     <fragment
         android:id="@+id/listFragment"
         android:name="com.robert.passwordmanager.ui.fragments.VaultFragment"

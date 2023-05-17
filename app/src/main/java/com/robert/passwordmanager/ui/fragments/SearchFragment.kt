@@ -1,6 +1,7 @@
 package com.robert.passwordmanager.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -40,7 +41,7 @@ class SearchFragment : Fragment() {
 
         setupSearchRecyclerView()
 
-        txtSearch.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+        binding.searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -55,6 +56,7 @@ class SearchFragment : Fragment() {
         })
 
         accountViewModel.searchResults.observe(viewLifecycleOwner){ results->
+            Log.i("SearchFragment", results.toString())
             searchAdapter.submitList(results)
         }
     }

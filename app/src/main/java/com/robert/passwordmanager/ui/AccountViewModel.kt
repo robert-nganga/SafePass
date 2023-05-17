@@ -25,6 +25,7 @@ class AccountViewModel @Inject constructor(
     private var _searchQuery = MutableLiveData<String>()
 
     val searchResults =  _searchQuery.switchMap { query->
+
         repository.searchPasswords(query)
     }
 
