@@ -22,6 +22,7 @@ import com.robert.passwordmanager.databinding.FragmentHomeBinding
 import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.models.AccountListItem
 import com.robert.passwordmanager.ui.MainActivity
+import com.robert.passwordmanager.utils.Utilities.copyPasswordToClipboard
 
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -48,7 +49,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         setupRecyclerView()
 
         accountsAdapter.setCopyClickListener { password->
-            copyPasswordToClipboard(password)
+            copyPasswordToClipboard(requireContext(),password)
         }
 
         accountsAdapter.itemClickListener { account ->
@@ -104,15 +105,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         }
     })
-
-    private fun copyPasswordToClipboard(pass: String) {
-        val clipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip: ClipData = ClipData.newPlainText("simple text", pass)
-        clipboard.setPrimaryClip(clip)
-        // Only show a toast for Android 12 and lower.
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2)
-            Toast.makeText(requireContext(), "Copied to clipboard", Toast.LENGTH_SHORT).show()
-    }
 
     private fun setupRecyclerView() {
         accountsAdapter = AccountsAdapter()

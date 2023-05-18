@@ -17,62 +17,46 @@ import com.google.android.material.slider.Slider
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.robert.passwordmanager.ui.AccountViewModel
 import com.robert.passwordmanager.R
+import com.robert.passwordmanager.databinding.FragmentToolsBinding
 import com.robert.passwordmanager.ui.MainActivity
+import com.robert.passwordmanager.utils.Utilities.copyPasswordToClipboard
 import kotlin.math.roundToInt
 
 class ToolsFragment : Fragment() {
-
-    private lateinit var txtPassword: TextView
-    private lateinit var btnCopy: ImageButton
-    private lateinit var txtLength: TextView
-    private lateinit var slider: Slider
-    private lateinit var btnGenerate: Button
     private var isNumbers: Boolean = true
     private var isLetters: Boolean = true
     private var isSymbols: Boolean = true
     private var length: Int = 8
 
+    private var _binding: FragmentToolsBinding? = null
+    private val binding get() = _binding!!
     private lateinit var accountViewModel: AccountViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_tools, container, false)
+        _binding = FragmentToolsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         accountViewModel = (activity as MainActivity).accountViewModel
 
-        txtLength = view.findViewById(R.id.txtLength)
-        txtPassword = view.findViewById(R.id.txtGeneratedPassword)
+        setupSwitchCheckedChangeListeners()
 
-        val numbersSwitch = view.findViewById<SwitchMaterial>(R.id.numbersSwitch)
-        numbersSwitch.setOnCheckedChangeListener { _, isChecked ->
-            isNumbers = isChecked
-        }
-
-        val lettersSwitch = view.findViewById<SwitchMaterial>(R.id.lettersSwitch)
-        lettersSwitch.setOnCheckedChangeListener { _, isChecked ->
-            isLetters = isChecked
-        }
-
-        val symbolsSwitch = view.findViewById<SwitchMaterial>(R.id.symbolsSwitch)
-        symbolsSwitch.setOnCheckedChangeListener { _, isChecked ->
-            isSymbols = isChecked
-        }
-
-        slider = view.findViewById(R.id.slider)
-        slider.addOnChangeListener { _, value, _ ->
-            txtLength.text = value.roundToInt().toString()
+        binding.slider.addOnChangeListener { _, value, _ ->
+            binding.txtLength.text = value.roundToInt().toString()
             length = value.roundToInt()
         }
 
-        btnCopy = view.findViewById(R.id.btnCopyPassword)
-        btnCopy.setOnClickListener {
-            copyGeneratedPassword(view)
+        binding.btnCopyPassword.setOnClickListener {
+            copyPasswordToClipboard(requireContext(), binding.txtGeneratedPassword.text.toString())
         }
 
-        btnGenerate = view.findViewById(R.id.generatePassword)
-        btnGenerate.setOnClickListener {
+        binding.generatePassword.setOnClickListener {
             if(!isNumbers && !isLetters && !isSymbols){
                 Toast.makeText(view.context, "Check at least one item", Toast.LENGTH_SHORT).show()
             }else{
@@ -81,19 +65,22 @@ class ToolsFragment : Fragment() {
         }
 
         accountViewModel.generatedPassword.observe(viewLifecycleOwner){ password->
-            txtPassword.text = password
+            binding.txtGeneratedPassword.text = password
         }
-        return view
     }
 
-    private fun copyGeneratedPassword(view: View) {
-        val clipboard = view.context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-        val password = txtPassword.text
-        val clip: ClipData = ClipData.newPlainText("password", password)
-        // Set the clipboard's primary clip.
-        clipboard.setPrimaryClip(clip)
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S_V2)
-            Toast.makeText(view.context, "Copied AccountItem", Toast.LENGTH_SHORT).show()
+    private fun setupSwitchCheckedChangeListeners() {
+        binding.numbersSwitch.setOnCheckedChangeListener { _, isChecked ->
+            isNumbers = isChecked
+        }
+
+        binding.lettersSwitch.setOnCheckedChangeListener { _, isChecked ->
+            isLetters = isChecked
+        }
+
+        binding.symbolsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            isSymbols = isChecked
+        }
     }
 
 
