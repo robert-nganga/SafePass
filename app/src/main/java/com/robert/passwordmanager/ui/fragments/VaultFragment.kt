@@ -17,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.robert.passwordmanager.ui.AccountViewModel
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.adapters.AccountItemsAdapter
+import com.robert.passwordmanager.databinding.FragmentVaultBinding
 import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.models.AccountListItem
 import com.robert.passwordmanager.ui.MainActivity
@@ -28,24 +29,32 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
 
     private lateinit var categories: Array<String>
     private lateinit var accountViewModel: AccountViewModel
-    private lateinit var recyclerView: RecyclerView
     private lateinit var accountItemsAdapter: AccountItemsAdapter
-    private lateinit var toolbar: MaterialToolbar
     private lateinit var orderByItem: View
+
+    private var _binding: FragmentVaultBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_vault, container, false)
+        _binding = FragmentVaultBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         categories = resources.getStringArray(R.array.categories)
         accountViewModel = (activity as MainActivity).accountViewModel
-        toolbar = view.findViewById(R.id.topAppBar)
         orderByItem = view.findViewById(R.id.action_orderBy)
         setupMenuClickListener()
-        recyclerView = view.findViewById(R.id.mainRecyclerView)
         setupRecyclerView()
+
+        binding.topAppBar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
 
         accountItemsAdapter.itemClickListener {
             val bundle = Bundle().apply {
@@ -54,7 +63,6 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
             findNavController().navigate(R.id.action_listFragment_to_addAccountFragment, bundle)
         }
 
-
         accountItemsAdapter.setCopyClickListener {
             copyPasswordToClipboard(requireContext(), it)
         }
@@ -62,13 +70,12 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
         accountViewModel.allAccountItems.observe(viewLifecycleOwner){
             accountItemsAdapter.submitList(it)
         }
-        return view
     }
 
     private fun setupRecyclerView() {
         accountItemsAdapter = AccountItemsAdapter()
 
-        recyclerView.apply {
+        binding.mainRecyclerView.apply {
             adapter = accountItemsAdapter
             itemTouchHelper.attachToRecyclerView(this)
             itemAnimator = null
@@ -106,7 +113,7 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
     })
 
     private fun setupMenuClickListener() {
-        toolbar.setOnMenuItemClickListener { menu->
+        binding.topAppBar.setOnMenuItemClickListener { menu->
             when(menu.itemId){
                 R.id.action_deleteAll -> {
                     accountViewModel.deleteAll()

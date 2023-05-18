@@ -116,7 +116,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         }
     }
 
-    private fun deletePassword(passwordDetails: Account) {
-        accountViewModel.deleteAccount(passwordDetails)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
+
 }

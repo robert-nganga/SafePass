@@ -51,6 +51,10 @@ class AddAccountFragment: Fragment(R.layout.fragment_add_account) {
                 initializeAccountDetails(account)
             }
         }
+
+        binding.toolBar.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
         setupAutoCompleteTextView()
 
         //Input validation

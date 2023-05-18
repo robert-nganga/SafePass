@@ -82,10 +82,6 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private fun deletePassword(passwordDetails: Account) {
-        accountViewModel.deleteAccount(passwordDetails)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
