@@ -34,6 +34,7 @@
             android:layout_weight="1"
             android:layout_marginEnd="5dp"
             android:elevation="4dp"
+            app:cardBackgroundColor="@color/black_300"
             app:cardCornerRadius="10dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -94,6 +95,7 @@
             android:layout_weight="1"
             android:layout_marginStart="5dp"
             android:elevation="4dp"
+            app:cardBackgroundColor="@color/black_300"
             app:cardCornerRadius="10dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -167,6 +169,7 @@
             android:layout_weight="1"
             android:layout_marginEnd="5dp"
             android:elevation="4dp"
+            app:cardBackgroundColor="@color/black_300"
             app:cardCornerRadius="10dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -216,7 +219,7 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toEndOf="@+id/cardView4"
                     app:layout_constraintTop_toBottomOf="@+id/strongText"
-                    android:text="@string/strong" />
+                    android:text="@string/safe" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
@@ -227,6 +230,7 @@
             android:layout_weight="0.9"
             android:layout_marginStart="5dp"
             android:elevation="4dp"
+            app:cardBackgroundColor="@color/black_300"
             app:cardCornerRadius="10dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -307,6 +311,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recentTv"
-        tools:listitem="@layout/recent_rv_item" />
+        tools:listitem="@layout/vault_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

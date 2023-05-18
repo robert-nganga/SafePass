@@ -1,6 +1,7 @@
 package com.robert.passwordmanager.ui
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.lifecycle.*
 import com.robert.passwordmanager.data.repositories.AccountRepository
 import com.robert.passwordmanager.models.Account
@@ -25,7 +26,7 @@ class AccountViewModel @Inject constructor(
     private var _searchQuery = MutableLiveData<String>()
 
     val searchResults =  _searchQuery.switchMap { query->
-
+        Log.i("Search", "search livedata updated query:: $query")
         repository.searchPasswords(query)
     }
 
@@ -135,12 +136,11 @@ class AccountViewModel @Inject constructor(
     }
 
     fun getReport(accounts: List<Account>): Report {
-        val reused = accounts.groupBy { it.password }.values.maxByOrNull { list-> list.size }
         return Report(
             total = accounts.size,
-            strong = accounts.filter { it.passwordStrengthLabel == "Very strong password" }.size,
+            safe = accounts.filter { it.passwordStrength > 0.55 }.size,
             weak = accounts.filter { it.passwordStrengthLabel == "Weak password" }.size,
-            reused = if(reused == null || reused.size == 1) 0 else reused.size
+            reused = accounts.groupBy { it.password }.values.count { it.size > 1 }
         )
     }
 

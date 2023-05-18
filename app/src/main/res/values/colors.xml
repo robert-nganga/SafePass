@@ -15,6 +15,7 @@
     <color name="yellow_700">#ffff1a</color>
     <color name="transparent">#00000000</color>
     <color name="light_grey">#f2f2f2</color>
+    <color name="grey_200"> #bfbfbf</color>
     <color name="purple_100">#34e699ff</color>
     <color name="red_100">#34ffcccc</color>
     <color name="green_200">#34b3e6b3</color>

@@ -29,7 +29,7 @@
     <string name="total">Total</string>
     <string name="weak">Weak</string>
     <string name="reused">Reused</string>
-    <string name="strong">Strong</string>
+    <string name="safe">Safe</string>
     <string-array name="categories">
         <item>Cloud</item>
         <item>Application</item>

@@ -68,7 +68,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             binding.totalText.text = report.total.toString()
             binding.weakText.text = report.weak.toString()
             binding.reusedText.text  = report.reused.toString()
-            binding.strongText.text = report.strong.toString()
+            binding.strongText.text = report.safe.toString()
         }
 
 
