@@ -1,26 +1,19 @@
 package com.robert.passwordmanager.ui.fragments
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.robert.passwordmanager.ui.AccountViewModel
-import com.robert.passwordmanager.adapters.AccountsAdapter
 import com.robert.passwordmanager.R
+import com.robert.passwordmanager.adapters.AccountsAdapter
 import com.robert.passwordmanager.databinding.FragmentHomeBinding
-import com.robert.passwordmanager.models.Account
-import com.robert.passwordmanager.models.AccountListItem
+import com.robert.passwordmanager.ui.AccountViewModel
 import com.robert.passwordmanager.ui.MainActivity
 import com.robert.passwordmanager.utils.Utilities.copyPasswordToClipboard
 
@@ -44,8 +37,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         accountViewModel = (activity as MainActivity).accountViewModel
-
-        val categories = resources.getStringArray(R.array.categories)
         setupRecyclerView()
 
         accountsAdapter.setCopyClickListener { password->
@@ -76,7 +67,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         accountViewModel.allAccounts.observe(viewLifecycleOwner) { list ->
             list.let {
                 accountsAdapter.submitList(it)
-                //updateTextViews(accountViewModel.getSizeOfEachCategory(categories, it))
             }
         }
     }
@@ -113,6 +103,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.recentRv.apply {
             adapter = accountsAdapter
             layoutManager = myLayoutManager
+            itemTouchHelper.attachToRecyclerView(this)
         }
     }
 

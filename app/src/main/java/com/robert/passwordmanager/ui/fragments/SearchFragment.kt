@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.adapters.AccountsAdapter
 import com.robert.passwordmanager.databinding.FragmentSearchBinding
-import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.ui.AccountViewModel
 import com.robert.passwordmanager.ui.MainActivity
 import com.robert.passwordmanager.utils.Utilities

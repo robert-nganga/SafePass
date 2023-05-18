@@ -1,25 +1,18 @@
 package com.robert.passwordmanager.ui.fragments
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.PopupMenu
-import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
-import com.robert.passwordmanager.ui.AccountViewModel
 import com.robert.passwordmanager.R
 import com.robert.passwordmanager.adapters.AccountItemsAdapter
 import com.robert.passwordmanager.databinding.FragmentVaultBinding
-import com.robert.passwordmanager.models.Account
 import com.robert.passwordmanager.models.AccountListItem
+import com.robert.passwordmanager.ui.AccountViewModel
 import com.robert.passwordmanager.ui.MainActivity
 import com.robert.passwordmanager.utils.OrderBy
 import com.robert.passwordmanager.utils.Utilities.copyPasswordToClipboard
@@ -148,6 +141,11 @@ class VaultFragment : Fragment(), PopupMenu.OnMenuItemClickListener {
             }
             else -> false
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }
