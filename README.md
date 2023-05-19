@@ -27,6 +27,7 @@ This is a password manager app developed in Kotlin for Android using the MVVM ar
   
 ## Future Updates  
    - Adding a backup server
+   - Password encryption
 
 ## Contributions
 We welcome contributions to this project. If you have any suggestions or want to report a bug, please open an issue or submit a pull request.
